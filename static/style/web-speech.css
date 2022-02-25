@@ -1,3 +1,17 @@
+body{
+    font-family: 'Georgia', serif;
+    color:#3E4349;
+}
+#nav {
+    position: absolute;
+    top: 20px;
+    left: 5px;
+    width: 10em;
+}
+
+#content {
+    margin-left: 10em;
+}
 #info a {
   color: darkred;
   text-decoration: underline;
@@ -8,7 +22,6 @@
   height:250px;
   width:250px; 
 } 
-
 .container2 {
   width:100%;
   height:auto;
@@ -47,12 +60,12 @@
   width: 50px;
   height: 50px;
 }
-/*  
+  
 .btn-primary {
   width: 100px;
   margin: auto;
 }
-
+/*
 select {
   padding: 5px 5px;
 }
