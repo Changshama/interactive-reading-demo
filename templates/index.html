@@ -1,72 +1,23 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Web Speech APIU</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="static/style/web-speech.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  </head>
-  <body>
-      <main>
-          <h3 class="text-center">Interactive Reading Demo</h3>
-          <h4 class="text-center">Finding demo - page 1
-              <div style="font-size:1.2em; float:right">Next Page</div>
-          </h4>
-          <div class='container2'>
-            <div style='float:left; margin-left:15%;'>
-              <img src="static/images/marlin-and-nemo.png" class='iconDetails'>
-            </div>  
-            <div style='float:right; margin-right:15%; width: 600px;'>
-              <div style="font-size:1.2em">Nemo was a little clownfish who lived a quiet life with his dad, Marlin, on the Great
-            Barrier Reef. Nemo longed for adventure but Marlin worried about the dangers in the ocean. He 
-            barely let Nemo out of his sight. On the first day of school, Marlin overheard Nemo and his new
-            friends daring each other to swim out over a steep cliff. "Come on Nemo, how far can you go?"</div>
-            </div>
-          </div>
-
-          <div class='containeraudiobook'>
-            <div>
-              <div style="font-size:1.2em">Listen to the book</div>  
-            </div>  
-            <div style='margin-left:60px;'>
-              <audio controls="controls" autoplay="autoplay" src="static/audio/model_reading.wav" type="audio/wav"></audio>
-            </div>
-            <div>
-              <div style="font-size:1.2em">Listen to questions</div>  
-            </div>  
-            <div style='margin-left:60px;'>
-              <audio controls="controls" autoplay="autoplay" src="static/audio/prompt_question.wav" type="audio/wav"></audio>
-            </div>
-          </div>
-
-          <div class="container mt-3">
-              <div id="info"></div>
-              <div class="float-right">
-                <button id="start_button">
-                  <img id="start_img" src="static/images/mic.gif" alt="Start"></button>
-              </div>
-              <div id="results">
-                <span id="final_span" class="final"></span>
-                <span id="interim_span" class="interim"></span>
-                <p>
-              </div>
-              <div class="row col-12 p-0 m-0">
-                <div class="row col-12 col-md-8 col-lg-6 p-0 m-0">
-                    <select id="select_language"></select>
-                    <select id="select_dialect"></select>
-                </div>
-                <div class="col-12 col-md-4 col-lg-6 mt-3 mt-md-0 p-0 m-0">
-                  <div class="float-right">
-                    <!-- <button id="copy_button" class="btn btn-primary ">Copy</button> -->
-                  </div>
-                </div>
-              </div>
-
-          </div>
-      </main>
-      <script src="static/js/languages.js"></script>
-      <script src="static/js/web-speech-api.js"></script>
-  </body>
+    <head>
+        <title>Interactive Reading Demo</title>
+        <link rel="stylesheet" type="text/css" href="static/style/web-speech.css" />
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <div id="content">
+            {% block body %}{% endblock %}
+        </div>
+        <div id="nav">
+            Navigation:<br />
+            <ul>
+                {% block nav %}{% endblock %}
+                <li><a href="{{url_for('nemo_1.index')}}">Finding nemo</a></li>
+                <li><a href="{{url_for('nemo_1.index')}}">Finding dory</a></li>
+                <li><a href="{{url_for('nemo_1.index')}}">Three little pigs</a></li>
+                <li><a href="{{url_for('nemo_1.index')}}">Too much glue</a></li>
+            </ul>
+        </div>
+    </body>
 </html>
