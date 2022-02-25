@@ -99,7 +99,7 @@ $( document ).ready(function() {
         window.getSelection().addRange(range);
       }
       if (final_transcript) {
-        var audio = new Audio("static/audio/prompt_answer.wav");
+        var audio = new Audio(prompt_ans);
         audio.play();
       }
     };
@@ -114,6 +114,15 @@ $( document ).ready(function() {
         }
       }
       final_transcript = capitalize(final_transcript);
+      temp = '';
+      for (var i = 0; i < keywords.length; i++){
+        if (final_transcript.includes(keywords[i])){
+          temp += keywords[i] + ';';
+        }
+      }
+      if (temp) {
+        final_transcript = temp;
+      }
       final_span.innerHTML = linebreak(final_transcript);
       interim_span.innerHTML = linebreak(interim_transcript);
     };
