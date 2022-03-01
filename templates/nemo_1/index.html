@@ -29,7 +29,14 @@
               <div style="font-size:1.2em">Listen to the book</div>  
             </div>  
             <div style='margin-left:60px;'>
-              <audio controls="controls" autoplay="autoplay" src="static/audio/model_reading.wav" type="audio/wav"></audio>
+              <audio id='modelreading' controls="controls" autoplay="autoplay" src="static/audio/model_reading.wav" type="audio/wav"></audio>
+              <script>
+                  audio = document.getElementById('modelreading');
+                  function redirectHandler() {
+                    window.location.href = {{ url_for('nemo_2.index')}};
+                  }
+                  audio.addEventListener('ended', redirectHandler, false);
+              </script>
             </div>
             <div>
               <div style="font-size:1.2em">Listen to questions</div>  
@@ -75,6 +82,7 @@
       <script>
           prompt_ans = {{ans_path|tojson}}
           keywords = {{keys|tojson}}
+          url={{redirect_url|tojson}}
       </script>
   </body>
 </html>
