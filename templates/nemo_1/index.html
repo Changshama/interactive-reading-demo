@@ -33,10 +33,16 @@
             </div>
             <div>
               <div style="font-size:1.2em">Listen to questions</div>  
-            </div>  
+            </div>
+          {% if 'Jimmy' == session['username'] %}  
             <div style='margin-left:60px;'>
               <audio controls="controls"  autostart="false" src="static/audio/prompt_question.wav" type="audio/wav"></audio>
             </div>
+          {% else %}  
+            <div style='margin-left:60px;'>
+              <audio controls="controls"  autostart="false" src="static/audio/prompt_question_peter.wav" type="audio/wav"></audio>
+            </div>
+          {% endif %}  
           </div>
 
           <div class="container mt-3">
