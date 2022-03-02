@@ -99,8 +99,11 @@ $( document ).ready(function() {
         window.getSelection().addRange(range);
       }
       if (final_transcript) {
-        var audio = new Audio(prompt_ans);
-        audio.play();
+        answer_audio = new Audio(prompt_ans);
+        answer_audio.play();
+        answer_audio.onended = function(){                          
+            redirectHandler(url);
+        };
       }
     };
 
@@ -129,6 +132,9 @@ $( document ).ready(function() {
   }
 });
 
+ function redirectHandler(redirect_url) {
+  window.location.href = redirect_url;
+}
 
 function updateCountry() {
   for (var i = select_dialect.options.length - 1; i >= 0; i--) {
