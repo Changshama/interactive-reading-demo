@@ -22,6 +22,12 @@ body{
   height:250px;
   width:250px; 
 } 
+.imgDetails {
+  margin-left:20%;
+  float:left; 
+  height:700px;
+  width:400px; 
+} 
 .container2 {
   width:100%;
   height:auto;
