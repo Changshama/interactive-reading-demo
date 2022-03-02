@@ -26,30 +26,31 @@
 
           <div class='containeraudiobook'>
             <div>
-              <div style="font-size:1.2em">Listen to the book</div>  
+              <div style="font-size:1.2em">{{username}}, listen to the book</div>  
             </div>  
             <div style='margin-left:60px;'>
               <audio id='modelreading' controls="controls" autoplay="autoplay" src="static/audio/model_reading.wav" type="audio/wav"></audio>
-              <script>
-                  audio = document.getElementById('modelreading');
-                  function redirectHandler() {
-                    window.location.href = {{ url_for('nemo_2.index')}};
-                  }
-                  audio.addEventListener('ended', redirectHandler, false);
-              </script>
             </div>
             <div>
-              <div style="font-size:1.2em">Listen to questions</div>  
+              <div style="font-size:1.2em">{{username}}, listen to questions</div>  
             </div>
-          {% if 'Jimmy' == session['username'] %}  
+ 
             <div style='margin-left:60px;'>
-              <audio controls="controls"  autostart="false" src="static/audio/prompt_question.wav" type="audio/wav"></audio>
+              <audio id='promptquestion' controls="controls"  autostart="false" type="audio/wav">
+              {% if 'Jimmy' == session['username'] %} 
+                <source src="static/audio/prompt_question.wav"></source>
+              {% else %}
+                <source src="static/audio/prompt_question_peter.wav"></source>
+              {% endif %}
+              </audio>
             </div>
-          {% else %}  
-            <div style='margin-left:60px;'>
-              <audio controls="controls"  autostart="false" src="static/audio/prompt_question_peter.wav" type="audio/wav"></audio>
-            </div>
-          {% endif %}  
+              <script>
+                var audio_link = document.getElementById('promptquestion');
+                var audio_reading = document.getElementById('modelreading');
+                audio_reading.onended = function(){                          
+                    audio_link.play();
+                };
+              </script>
           </div>
 
           <div class="container mt-3">
@@ -82,7 +83,7 @@
       <script>
           prompt_ans = {{ans_path|tojson}}
           keywords = {{keys|tojson}}
-          url={{redirect_url|tojson}}
+          window.url = {{ url_for('nemo_2.index')}}
       </script>
   </body>
 </html>
