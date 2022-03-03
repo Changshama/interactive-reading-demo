@@ -6,8 +6,8 @@ var messages = {
     msg: 'Speak now.',
     class: 'alert-success'},
   "no_speech": {
-    msg: 'No speech was detected. You may need to adjust your <a href="//support.google.com/chrome/answer/2693767" target="_blank">microphone settings</a>.',
-    class: 'alert-danger'},
+    msg: 'No speech was detected. Click on the microphone icon to try again.',
+    class: 'alert-warning'},
   "no_microphone": {
     msg: 'No microphone was found. Ensure that a microphone is installed and that <a href="//support.google.com/chrome/answer/2693767" target="_blank">microphone settings</a> are configured correctly.',
     class: 'alert-danger'},
@@ -116,7 +116,18 @@ $( document ).ready(function() {
           interim_transcript += event.results[i][0].transcript;
         }
       }
+      if (interim_transcript === "") {
+        setTimeout(function () {
+          if (recognizing) {
+            recognition.stop();
+            sound_effect = new Audio('static/audio/floop2_x.wav');
+            sound_effect.play();
+            return;
+          }
+        }, 7.0*1000);
+      }
       final_transcript = capitalize(final_transcript);
+
       temp = '';
       for (var i = 0; i < keywords.length; i++){
         if (final_transcript.includes(keywords[i])){
@@ -126,6 +137,7 @@ $( document ).ready(function() {
       if (temp) {
         final_transcript = temp;
       }
+
       final_span.innerHTML = linebreak(final_transcript);
       interim_span.innerHTML = linebreak(interim_transcript);
     };
