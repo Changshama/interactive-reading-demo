@@ -2,7 +2,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Web Speech APIU</title>
+    <title>100-floor-building</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/style/web-speech.css">
@@ -16,7 +16,7 @@
               <img src="static/images/page_1.png" class='imgDetails'>
             </div>  
             <div style='float:right; margin-right:15%; width: 600px;'>
-              <button id="copy_button" class="btn btn-primary" onclick="location.href='{{ url_for('100_floor_page2.index')}}'">Next</button>
+              <button id="copy_button" class="btn btn-primary" onclick="location.href='{{ url_for('100_floor.page2')}}'">Next</button>
             </div>
           </div>
 
@@ -30,7 +30,7 @@
               <script>
                   audio = document.getElementById('modelreading');
                   function redirectHandler() {
-                    window.location.href = {{ url_for('100_floor_page2.index')}};
+                    window.location.href = {{ url_for('100_floor.page2')}};
                   }
                   audio.addEventListener('ended', redirectHandler, false);
               </script>

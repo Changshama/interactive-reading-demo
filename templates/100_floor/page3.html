@@ -2,7 +2,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Web Speech APIU</title>
+    <title>100-floor-building</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/style/web-speech.css">
@@ -13,10 +13,10 @@
           <h3 class="text-center">100层的房子</h3>
           <div class='container2'>
             <div style='float:left; margin-left:15%;'>
-              <img src="static/images/page_2.png" class='imgDetails'>
+              <img src="static/images/page_3.png" class='imgDetails'>
             </div>  
             <div style='float:right; margin-right:15%; width: 600px;'>
-              <button id="copy_button" class="btn btn-primary" onclick="location.href='{{ url_for('100_floor_page3.index')}}'">Next</button>
+              <button id="copy_button" class="btn btn-primary" onclick="location.href='{{ url_for('100_floor.page4')}}'">Next</button>
             </div>
           </div>
 
@@ -25,12 +25,12 @@
               <div style="font-size:1.2em">{{username}}, listen to the book</div>  
             </div>  
             <div style='margin-left:60px;'>
-              <audio id='modelreading' controls="controls" autoplay="autoplay" src="static/audio/100-page2.wav" type="audio/wav"></audio>
+              <audio id='modelreading' controls="controls" autoplay="autoplay" src="static/audio/100-page3.wav" type="audio/wav"></audio>
             </div>
               <script>
                   audio = document.getElementById('modelreading');
                   function redirectHandler() {
-                    window.location.href = {{ url_for('100_floor_page3.index')}};
+                    window.location.href = {{ url_for('100_floor.page4')}};
                   }
                   audio.addEventListener('ended', redirectHandler, false);
               </script>
