@@ -26,13 +26,14 @@
             <div>
               <div style="font-size:1.2em">{{username}}, listen to the book</div>  
             </div>  
-            <div style='margin-left:60px;'>
-              <audio id='modelreading' controls="controls" autoplay="autoplay" 
-                src="{{ url_for('static', filename='audio/100/'+audio_name) }}" type="audio/wav"></audio>
-            </div>
+
            
               {% block content %}
                 {% if 'wav' in question_name %}
+                  <div style='margin-left:60px;'>
+                    <audio id='modelreading' controls="controls" autoplay="autoplay" 
+                    src="{{ url_for('static', filename='audio/100/'+audio_name) }}" type="audio/wav"></audio>
+                  </div>
                   <div>
                       <div style="font-size:1.2em">{{username}}, listen to questions</div>  
                   </div>
@@ -74,7 +75,17 @@
                   </div>
 
                 {% else %}
-                  <div style="font-size:1.2em"> </div>  
+                  <div style='margin-left:60px;'>
+                    <audio id='modelreading-2' controls="controls" autoplay="autoplay" 
+                    src="{{ url_for('static', filename='audio/100/'+audio_name) }}" type="audio/wav"></audio>
+                  </div>                
+                  <script>
+                    audio = document.getElementById('modelreading-2');
+                    function redirectHandler() {
+                      window.location.href = '{{ url_for(next_url)}}';
+                    }
+                    audio.addEventListener('ended', redirectHandler, false);
+                  </script>  
                 {% endif %}
               {% endblock content %}                         
 
@@ -86,7 +97,7 @@
       <script>
           prompt_ans = {{ans_path|tojson}}
           keywords = {{keys|tojson}}
-          window.url = {{ url_for(next_url)}}
+          window.url = '{{ url_for(next_url)}}'
       </script>
   </body>
 </html>
