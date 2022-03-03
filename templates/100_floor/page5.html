@@ -13,31 +13,46 @@
           <h3 class="text-center">100层的房子</h3>
           <div class='container2'>
             <div style='float:left; margin-left:15%;'>
-              <img src="static/images/page_5.png" class='imgDetails'>
+              <img src="{{ url_for('static', filename='images/100/'+img_name) }}" class='imgDetails'>
             </div>  
+            <div style='float:right; margin-right:15%; width: 600px;'>
+              <button id="copy_button" class="btn btn-primary" 
+                onclick="location.href='{{ url_for(next_url)}}'">Next
+              </button>
+            </div>
+          </div>
 
           <div class='containeraudiobook'>
             <div>
               <div style="font-size:1.2em">{{username}}, listen to the book</div>  
             </div>  
             <div style='margin-left:60px;'>
-              <audio id='modelreading-3' controls="controls" autoplay="autoplay" src="static/audio/100-page5.wav" type="audio/wav"></audio>
+              <audio id='modelreading' controls="controls" autoplay="autoplay" 
+                src="{{ url_for('static', filename='audio/100/'+audio_name) }}" type="audio/wav"></audio>
             </div>
-            <div>
-              <div style="font-size:1.2em">{{username}}, listen to questions</div>  
-            </div>
- 
-            <div style='margin-left:60px;'>
-              <audio id='promptquestion-3' controls="controls"  autostart="false" src="static/audio/question-page5.wav" type="audio/wav">
-              </audio>
-            </div>
-              <script>
-                var audio_link = document.getElementById('promptquestion-3');
-                var audio_reading = document.getElementById('modelreading-3');
-                audio_reading.onended = function(){                          
-                    audio_link.play();
-                };
-              </script>
+           
+              {% block content %}
+                {% if 'wav' in question_name %}
+                  <div>
+                      <div style="font-size:1.2em">{{username}}, listen to questions</div>  
+                  </div>
+                  <div id = 'question_audio' style='margin-left:60px;'>
+                    <audio id="promptquestion" controls="controls"  autostart="false"
+                            src="{{ url_for('static', filename='audio/100/'+question_name) }}" type="audio/wav">
+                    </audio>
+                  </div>
+                    <script>
+                      var audio_link = document.getElementById('promptquestion');
+                      var audio_reading = document.getElementById('modelreading');
+                      audio_reading.onended = function(){                          
+                        audio_link.play();
+                      };
+                    </script>
+                {% else %}
+                  <div style="font-size:1.2em"> </div>  
+                {% endif %}
+              {% endblock content %}                         
+
           </div>
 
           <div class="container mt-3">
@@ -70,6 +85,7 @@
       <script>
           prompt_ans = {{ans_path|tojson}}
           keywords = {{keys|tojson}}
+          window.url = {{ url_for(next_url)}}
       </script>
   </body>
 </html>
