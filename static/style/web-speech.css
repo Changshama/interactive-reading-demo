@@ -28,6 +28,14 @@ body{
   height:700px;
   width:400px; 
 } 
+.container{
+  width:100%;
+  display:flex;
+}
+.first-div,.second-div{
+  width:50%;
+  border: 1px solid rgba(255,255,255,.5);
+}
 .container2 {
   width:100%;
   height:auto;
