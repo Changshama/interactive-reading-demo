@@ -48,11 +48,17 @@ $( document ).ready(function() {
   if (!('webkitSpeechRecognition' in window)) {
     upgrade();
   } else {
-    showInfo('start');  
+    showInfo('start');
     start_button.style.display = 'inline-block';
     recognition = new webkitSpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = true;
+
+    /*once question was asked, recognition auto starts immediately*/
+    var prompt_ques_link = document.getElementById('promptquestion');
+    prompt_ques_link.onended = function(){                          
+      initialize();
+    };
 
     recognition.onstart = function() {
       recognizing = true;
@@ -116,16 +122,7 @@ $( document ).ready(function() {
           interim_transcript += event.results[i][0].transcript;
         }
       }
-      if (interim_transcript === "") {
-        setTimeout(function () {
-          if (recognizing) {
-            recognition.stop();
-            sound_effect = new Audio('static/audio/floop2_x.wav');
-            sound_effect.play();
-            return;
-          }
-        }, 7.0*1000);
-      }
+
       final_transcript = capitalize(final_transcript);
 
       temp = '';
@@ -140,6 +137,18 @@ $( document ).ready(function() {
 
       final_span.innerHTML = linebreak(final_transcript);
       interim_span.innerHTML = linebreak(interim_transcript);
+
+      if (interim_transcript === "") {
+        setTimeout(function () {
+          if (recognizing) {
+            recognition.stop();
+            sound_effect = new Audio('static/audio/floop2_x.wav');
+            sound_effect.play();
+            return;
+          }
+        }, 7.0*1000);
+      }
+      
     };
   }
 });
@@ -206,6 +215,14 @@ $("#start_button").click(function () {
     recognition.stop();
     return;
   }
+  initialize();
+});
+
+$("#select_language").change(function () {
+  updateCountry();
+});
+
+function initialize() {
   final_transcript = '';
   recognition.lang = select_dialect.value;
   recognition.start();
@@ -215,11 +232,8 @@ $("#start_button").click(function () {
   start_img.src = 'static/images/mic-slash.gif';
   showInfo('allow');
   start_timestamp = event.timeStamp;
-});
+}
 
-$("#select_language").change(function () {
-  updateCountry();
-});
 
 function showInfo(s) {
   if (s) {
