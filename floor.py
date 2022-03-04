@@ -19,6 +19,15 @@ def login_required(method):
             return redirect(url_for('index'))
     return wrapper
 
+@bp_100.route('/landing')
+def landing():
+    return render_template('100_floor/landing.html', 
+                            username =session["username"],
+                            question_name = 'landing-question.wav',
+                            next_url =page_conf[24]['next_url'],
+                            ans_path = "static/audio/start-reading.wav",
+                            keys=page_conf[0]['ans_path'])
+
 @bp_100.route('/page1')
 @login_required
 def page1():
