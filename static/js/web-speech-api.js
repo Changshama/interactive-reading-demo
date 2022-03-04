@@ -70,6 +70,8 @@ $( document ).ready(function() {
       if (event.error == 'no-speech') {
         start_img.src = 'static/images/mic.gif';
         showInfo('no_speech');
+        tip_audio = new Audio('static/audio/click_microphone_tip.wav');
+        tip_audio.play();
         ignore_onend = true;
       }
       if (event.error == 'audio-capture') {
@@ -138,7 +140,7 @@ $( document ).ready(function() {
       final_span.innerHTML = linebreak(final_transcript);
       interim_span.innerHTML = linebreak(interim_transcript);
 
-      if (interim_transcript === "") {
+      if (final_transcript === "") {
         setTimeout(function () {
           if (recognizing) {
             recognition.stop();
