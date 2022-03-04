@@ -11,33 +11,32 @@
   <body>
       <main>
           <h3 class="text-center">100层的房子</h3>
-          <div class='container2'>
-            <div style='float:left; margin-left:15%;'>
-              <img src="{{ url_for('static', filename='images/100/'+img_name) }}" class='imgDetails'>
-            </div>  
-            <div style='float:right; margin-right:15%; width: 600px;'>
-              <button id="copy_button" class="btn btn-primary" 
-                onclick="location.href='{{ url_for(next_url)}}'">Next
-              </button>
+          <div class="container">
+            <div class="first-div">
+              <div style='margin:0 auto;'>
+                <img src="{{ url_for('static', filename='images/100/'+img_name) }}" class='imgDetails'>
+              </div>
             </div>
-          </div>
-
-          <div class='containeraudiobook'>
-            <div>
-              <div style="font-size:1.2em">{{username}}, listen to the book</div>  
-            </div>  
-
-           
+            <div class="second-div">
               {% block content %}
-                {% if 'wav' in question_name %}
-                  <div style='margin-left:60px;'>
+                <div style='float:right; margin-right:5%;margin-bottom:10px;'>
+                  <button id="copy_button" class="btn btn-primary" 
+                    onclick="location.href='{{ url_for(next_url)}}'">Next
+                  </button>
+                </div>
+                <p></p>
+                <div style="font-size:1.2em;margin-left:60px;">{{username}}, listen to book</div>
+                {% if 'wav' in question_name %}                                   
+                  <div style='margin-left:60px;margin-bottom:10px;'>
                     <audio id='modelreading' controls="controls" autoplay="autoplay" 
                     src="{{ url_for('static', filename='audio/100/'+audio_name) }}" type="audio/wav"></audio>
                   </div>
+                  <p></p>
                   <div>
-                      <div style="font-size:1.2em">{{username}}, listen to questions</div>  
+                      <div style="font-size:1.2em;margin-left:60px;">{{username}}, listen to questions</div>  
                   </div>
-                  <div id = 'question_audio' style='margin-left:60px;'>
+                  <p></p>
+                  <div id = 'question_audio' style='margin-left:60px;margin-bottom:10px;'>
                     <audio id="promptquestion" controls="controls"  autostart="false"
                             src="{{ url_for('static', filename='audio/100/'+question_name) }}" type="audio/wav">
                     </audio>
@@ -50,7 +49,6 @@
                       };
                     </script>
 
-                  <div class="container mt-3">
                       <div id="info"></div>
                       <div class="float-right">
                         <button id="start_button">
@@ -72,8 +70,7 @@
                           </div>
                         </div>
                       </div>
-                  </div>
-
+                                  
                 {% else %}
                   <div style='margin-left:60px;'>
                     <audio id='modelreading-2' controls="controls" autoplay="autoplay" 
@@ -87,9 +84,9 @@
                     audio.addEventListener('ended', redirectHandler, false);
                   </script>  
                 {% endif %}
+              </div>
               {% endblock content %}                         
-
-          </div>
+            </div>
 
       </main>
       <script src="static/js/languages.js"></script>
