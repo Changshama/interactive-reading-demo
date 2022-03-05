@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, flash, url_for, redirect, session, render_template
 import functools
 import csv
+import ast
 
 bp_100 = Blueprint('100_floor', __name__, static_folder='static',
                template_folder='templates')
@@ -18,6 +19,15 @@ with open('page_conf_nemo.csv') as f:
         for row in csv.DictReader(f, skipinitialspace=True)]
 f.close()
 
+# extract list from string
+def liststr_2_listarr(dict, val):
+  liststr = [d[val] for d in dict]
+  return [ast.literal_eval(el_str) for el_str in liststr]
+
+ans_keys_100 = liststr_2_listarr(page_conf, 'ans_key')
+ans_keys_nemo = liststr_2_listarr(page_conf_nemo, 'ans_key')
+
+#login
 def login_required(method):
     @functools.wraps(method)
     def wrapper(*args, **kwargs):
@@ -38,7 +48,7 @@ def page1():
                            question_name = page_conf_nemo[0]['question_name'],
                            next_url=page_conf_nemo[0]['next_url'],
                            ans_path = page_conf_nemo[0]['ans_path'],  
-                           keys=page_conf_nemo[0]['ans_path'])
+                           keys=ans_keys_nemo[0])
 
 @bp_nemo.route('/page2')
 @login_required
@@ -50,7 +60,7 @@ def page2():
                            question_name = page_conf_nemo[1]['question_name'],
                            next_url=page_conf_nemo[1]['next_url'],
                            ans_path = page_conf_nemo[1]['ans_path'],  
-                           keys=page_conf_nemo[1]['ans_path'])
+                           keys=ans_keys_nemo[1])
 
 @bp_nemo.route('/page3')
 @login_required
@@ -62,7 +72,7 @@ def page3():
                            question_name = page_conf_nemo[2]['question_name'],
                            next_url=page_conf_nemo[2]['next_url'],
                            ans_path = page_conf_nemo[2]['ans_path'],  
-                           keys=page_conf_nemo[2]['ans_path'])
+                           keys=ans_keys_nemo[2])
 @bp_nemo.route('/page4')
 @login_required
 def page4():
@@ -73,7 +83,7 @@ def page4():
                            question_name = page_conf_nemo[3]['question_name'],
                            next_url=page_conf_nemo[3]['next_url'],
                            ans_path = page_conf_nemo[3]['ans_path'],  
-                           keys=page_conf_nemo[3]['ans_path'])
+                           keys=ans_keys_nemo[3])
 
 @bp_nemo.route('/page5')
 @login_required
@@ -85,7 +95,7 @@ def page5():
                            question_name = page_conf_nemo[4]['question_name'],
                            next_url=page_conf_nemo[4]['next_url'],
                            ans_path = page_conf_nemo[4]['ans_path'],  
-                           keys=page_conf_nemo[4]['ans_path'])
+                           keys=ans_keys_nemo[4])
 
 
 @bp_100.route('/landing')
@@ -95,7 +105,7 @@ def landing():
                             question_name = 'landing-question.wav',
                             next_url =page_conf[24]['next_url'],
                             ans_path = "static/audio/start-reading.wav",
-                            keys=page_conf[0]['ans_path'])
+                            keys=['好了','准备'])
 
 @bp_100.route('/page1')
 @login_required
@@ -107,7 +117,7 @@ def page1():
                            question_name = page_conf[0]['question_name'],
                            next_url=page_conf[0]['next_url'],
                            ans_path = page_conf[0]['ans_path'],  
-                           keys=page_conf[0]['ans_path'])
+                           keys=ans_keys_100[0])
 
 @bp_100.route('/page2')
 @login_required
@@ -119,7 +129,7 @@ def page2():
                            question_name = page_conf[1]['question_name'],
                            next_url=page_conf[1]['next_url'],
                            ans_path = page_conf[1]['ans_path'],  
-                           keys=page_conf[1]['ans_path'])
+                           keys=ans_keys_100[1])
 
 @bp_100.route('/page3')
 @login_required
@@ -131,7 +141,7 @@ def page3():
                            question_name = page_conf[2]['question_name'],
                            next_url=page_conf[2]['next_url'],
                            ans_path = page_conf[2]['ans_path'],  
-                           keys=page_conf[2]['ans_path'])
+                           keys=ans_keys_100[2])
 @bp_100.route('/page4')
 @login_required
 def page4():
@@ -142,7 +152,7 @@ def page4():
                            question_name = page_conf[3]['question_name'],
                            next_url=page_conf[3]['next_url'],
                            ans_path = page_conf[3]['ans_path'],  
-                           keys=page_conf[3]['ans_path'])
+                           keys=ans_keys_100[3])
 
 @bp_100.route('/page5')
 @login_required
@@ -154,7 +164,7 @@ def page5():
                            question_name = page_conf[4]['question_name'],
                            next_url=page_conf[4]['next_url'],
                            ans_path = page_conf[4]['ans_path'],  
-                           keys=page_conf[4]['ans_path'])
+                           keys=ans_keys_100[4])
 
 @bp_100.route('/page6')
 @login_required
@@ -166,7 +176,7 @@ def page6():
                            question_name = page_conf[5]['question_name'],
                            next_url=page_conf[5]['next_url'],
                            ans_path = page_conf[5]['ans_path'],  
-                           keys=page_conf[5]['ans_path'])
+                           keys=ans_keys_100[5])
 
 @bp_100.route('/page7')
 @login_required
@@ -179,7 +189,7 @@ def page7():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
                       
 
 @bp_100.route('/page8')
@@ -193,7 +203,7 @@ def page8():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path']) 
+                           keys=ans_keys_100[i]) 
 @bp_100.route('/page9')
 @login_required
 def page9():
@@ -205,7 +215,7 @@ def page9():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
                       
 
 @bp_100.route('/page10')
@@ -219,7 +229,7 @@ def page10():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])                            
+                           keys=ans_keys_100[i])                            
 
 
 @bp_100.route('/page11')
@@ -233,7 +243,7 @@ def page11():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page12')
 @login_required
@@ -246,7 +256,7 @@ def page12():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page13')
 @login_required
@@ -259,7 +269,7 @@ def page13():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 @bp_100.route('/page14')
 @login_required
 def page14():
@@ -271,7 +281,7 @@ def page14():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page15')
 @login_required
@@ -284,7 +294,7 @@ def page15():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page16')
 @login_required
@@ -297,7 +307,7 @@ def page16():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page17')
 @login_required
@@ -310,7 +320,7 @@ def page17():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
                       
 
 @bp_100.route('/page18')
@@ -324,7 +334,7 @@ def page18():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path']) 
+                           keys=ans_keys_100[i]) 
 @bp_100.route('/page19')
 @login_required
 def page19():
@@ -336,7 +346,7 @@ def page19():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 @bp_100.route('/page20')
 @login_required
 def page20():
@@ -348,7 +358,7 @@ def page20():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])   
+                           keys=ans_keys_100[i])   
 
 @bp_100.route('/page21')
 @login_required
@@ -361,7 +371,7 @@ def page21():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page22')
 @login_required
@@ -374,7 +384,7 @@ def page22():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page23')
 @login_required
@@ -387,7 +397,7 @@ def page23():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 @bp_100.route('/page24')
 @login_required
 def page24():
@@ -399,7 +409,7 @@ def page24():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])
+                           keys=ans_keys_100[i])
 
 @bp_100.route('/page25')
 @login_required
@@ -412,4 +422,4 @@ def page25():
                            question_name = page_conf[i]['question_name'],
                            next_url=page_conf[i]['next_url'],
                            ans_path = page_conf[i]['ans_path'],  
-                           keys=page_conf[i]['ans_path'])                                            
+                           keys=ans_keys_100[i])                                            
