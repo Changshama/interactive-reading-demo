@@ -50,7 +50,7 @@ $( document ).ready(function() {
   } else {
     showInfo('start');
     start_button.style.display = 'inline-block';
-    recognition = new webkitSpeechRecognition();
+    recognition = new webkitSpeechRecognition() || new SpeechRecognition();;
     recognition.continuous = true;
     recognition.interimResults = true;
 
@@ -89,7 +89,7 @@ $( document ).ready(function() {
       }
     };
 
-    recognition.onend = function() {
+    recognition.onend = function () {     
       recognizing = false;
       if (ignore_onend) {
         return;
@@ -106,6 +106,7 @@ $( document ).ready(function() {
         range.selectNode(document.getElementById('final_span'));
         window.getSelection().addRange(range);
       }
+
       if (final_transcript) {
         answer_audio = new Audio(prompt_ans);
         answer_audio.play();
@@ -113,21 +114,35 @@ $( document ).ready(function() {
             redirectHandler(url);
         };
       }
+
+
     };
 
-    recognition.onresult = function(event) {
+    recognition.addEventListener('speechend', function() {
+        //   timeoutHandle = window.setTimeout(function () {
+        //   if (recognizing) {
+        //     recognition.stop();
+        //     sound_effect = new Audio('static/audio/floop2_x.wav');
+        //     sound_effect.play();
+        //     return;
+        //   }
+        // }, 7.0*1000);
+      sound_effect = new Audio('static/audio/floop2_x.wav');
+      sound_effect.play();
+    });
+       
+    recognition.onresult = function (event) {         
       var interim_transcript = '';
+
       for (var i = event.resultIndex; i < event.results.length; ++i) {
+        
         if (event.results[i].isFinal) {
           final_transcript += event.results[i][0].transcript;
         } else {
           interim_transcript += event.results[i][0].transcript;
         }
       }
-
-      final_transcript = capitalize(final_transcript);
-
-      temp = '';
+      var temp = '';
       for (var i = 0; i < keywords.length; i++){
         if (final_transcript.includes(keywords[i])){
           temp += keywords[i] + ';';
@@ -140,17 +155,6 @@ $( document ).ready(function() {
       final_span.innerHTML = linebreak(final_transcript);
       interim_span.innerHTML = linebreak(interim_transcript);
 
-      if (final_transcript === "") {
-        setTimeout(function () {
-          if (recognizing) {
-            recognition.stop();
-            sound_effect = new Audio('static/audio/floop2_x.wav');
-            sound_effect.play();
-            return;
-          }
-        }, 7.0*1000);
-      }
-      
     };
   }
 });
