@@ -22,7 +22,8 @@ metadata.create_all(engine)
 insert_query = que_table.insert()
 
 with open('question_table.csv', 'r', encoding="utf-8") as csvfile:
-    csv_reader = csv.reader(csvfile, delimiter=',')
+    csv_reader = csv.reader(csvfile, delimiter=',') 
+    next(csv_reader, None) #skip header
     engine.execute(
         insert_query,
         [{"book_id": row[1], "page_id": row[2], "level": row[3], 
@@ -47,6 +48,7 @@ insert_query = user_table.insert()
 
 with open('user_table.csv', 'r', encoding="utf-8") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
+    next(csv_reader, None) #skip header
     engine.execute(
         insert_query,
         [{"username": row[1], "pwd": row[2],
