@@ -10,7 +10,7 @@ metadata = MetaData()
 
 # Define the table with sqlalchemy:
 que_table = Table('question', metadata,
-    Column('id', Integer),
+    Column('id', Integer, primary_key=True),
     Column('book_id', Integer),
     Column('page_id', Integer),
     Column('level', Integer),
@@ -25,7 +25,7 @@ with open('question_table.csv', 'r', encoding="utf-8") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
     engine.execute(
         insert_query,
-        [{"id": row[0], "book_id": row[1], "page_id": row[2], "level": row[3], 
+        [{"book_id": row[1], "page_id": row[2], "level": row[3], 
           "audio": row[4], "ans_audio": row[5], "ans_keys": row[6]} 
             for row in csv_reader]
     )
@@ -34,7 +34,7 @@ metadata = MetaData()
 #TODO change que_answered & book_read to Array type
 
 user_table = Table('user', metadata,
-    Column('id', Integer),
+    Column('id', Integer, primary_key=True),
     Column('username', String(20)),
     Column('pwd', String(20)),
     Column('age', Integer),
@@ -49,7 +49,7 @@ with open('user_table.csv', 'r', encoding="utf-8") as csvfile:
     csv_reader = csv.reader(csvfile, delimiter=',')
     engine.execute(
         insert_query,
-        [{"id": row[0], "username": row[1], "pwd": row[2],
+        [{"username": row[1], "pwd": row[2],
           "age": row[3], "level": row[4], 
           "que_answered": row[5], "book_read": row[6]} 
             for row in csv_reader]
