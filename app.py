@@ -9,7 +9,7 @@ import csv
 
 app = Flask(__name__)
 app.secret_key = "thisisit"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///coco.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cocotest.db'
 db = SQLAlchemy(app)
 
 
@@ -30,7 +30,25 @@ with open('page_conf.csv') as f:
 f.close()
 
 @bp_100.route('/landing')
+@login_required
 def landing():
+    # filter out questions answered (correctly) by this user
+    user = db.session.query(User).filter_by(username = session["username"]).first()
+    que_answered = []
+    if len(user.que_answered) > 0:
+      que_answered = list(map(int, user.que_answered.split(';')))
+    question = db.session.query(Question).filter(~Question.id.in_(que_answered))
+
+    # create question for all pages
+    for page in range(1, len(page_conf)):
+      page_que = question.filter_by(book_id=1,level=user.level, page_id=page).first()
+      if page_que:
+        page_conf[page-1]['que_audio'] = page_que.audio
+        page_conf[page-1]['ans_audio'] = 'static/audio/100/'+page_que.ans_audio
+        page_conf[page-1]['ans_keys'] = page_que.ans_keys.split(';')
+      else:
+        page_conf[page-1]['ans_keys'] = []
+
     return render_template('100_floor/landing.html', 
                             username =session["username"],
                             question_name = 'landing-question.wav',
@@ -41,24 +59,15 @@ def landing():
 @bp_100.route('/<int:page>')
 @login_required
 def innerbook(page):
-    idx = page -1
-    question = db.session.query(Question).filter_by(book_id=1,page_id=page).first()
-    que_name = ''
-    a_path = ''
-    a_keys = []
-    if question:
-      que_name = question.audio
-      a_path = 'static/audio/100/'+question.ans_audio
-      a_key = question.ans_keys
-      a_keys = a_key.split(';')
+    idx = page -1    
     return render_template('100_floor/innerbook.html', 
                         username =session["username"],
                         img_name = page_conf[idx]['img_name'],
                         audio_name = page_conf[idx]['audio_name'],
-                        question_name = que_name,
+                        question_name = page_conf[idx]['que_audio'],
                         next_page=page_conf[idx]['next_page'],
-                        ans_path = a_path,  
-                        keys=a_keys)
+                        ans_path = page_conf[idx]['ans_audio'],  
+                        keys=page_conf[idx]['ans_keys'])
 
 nemo_1_keys = ['Orange', 'Stripe', 'Black', 'White', 'orange', 'white']
 nemo_2_keys = ['Forget', 'Remember', 'Memory', 'loss', 'Issue', 'forget', 'remember']
