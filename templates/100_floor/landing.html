@@ -67,7 +67,7 @@
       <script>
           prompt_ans = {{ans_path|tojson}}
           keywords = {{keys|tojson}}
-          window.url = {{ url_for('100_floor.innerbook', page=next_page)}}
+          window.url = "{{ url_for('100_floor.innerbook', page=next_page)}}"
       </script>
   </body>
 </html>
