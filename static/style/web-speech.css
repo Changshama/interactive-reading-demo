@@ -4,17 +4,26 @@ body{
 }
 #nav {
     position: absolute;
-    top: 20px;
-    left: 5px;
-    width: 10em;
+    top: 60px;
+    left: 10px;
+    width: 20em;
 }
 
 #content {
-    margin-left: 10em;
+    margin-right: 10em;
+}
+#home {
+    margin-left: 4em;
 }
 #info a {
   color: darkred;
   text-decoration: underline;
+}
+.homeImg {
+  margin-left:5%;
+  float:left; 
+  height:350px;
+  width:450px; 
 }
 .iconDetails {
   margin-left:20%;
