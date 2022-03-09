@@ -1,17 +1,7 @@
-from flask import Flask, Blueprint, url_for, redirect, session, render_template
+from flask import Flask, flash, Blueprint, url_for, redirect, session, render_template
 import functools
 import csv
 import ast
-from cocodb import db, engine
-from sqlalchemy import Table
-
-bp_100 = Blueprint('100_floor', __name__, static_folder='static',
-               template_folder='templates')
-
-with open('page_conf.csv') as f:
-    page_conf = [{k: v for k, v in row.items()}
-        for row in csv.DictReader(f, skipinitialspace=True)]
-f.close()
 
 
 bp_nemo = Blueprint('nemo', __name__, static_folder='static',
@@ -27,7 +17,6 @@ def liststr_2_listarr(dict, val):
   liststr = [d[val] for d in dict]
   return [ast.literal_eval(el_str) for el_str in liststr]
 
-ans_keys_100 = liststr_2_listarr(page_conf, 'ans_key')
 ans_keys_nemo = liststr_2_listarr(page_conf_nemo, 'ans_key')
 
 #login
@@ -42,36 +31,16 @@ def login_required(method):
     return wrapper
 
 
-@bp_100.route('/landing')
-def landing():
-    return render_template('100_floor/landing.html', 
-                            username =session["username"],
-                            question_name = 'landing-question.wav',
-                            next_page = 1,
-                            ans_path = "static/audio/start-reading.wav",
-                            keys=['好了','准备'])
 
-@bp_100.route('/<int:page>')
-@login_required
-def innerbook(page):
-    idx = page -1
-    # question = db.session.query(Question).filter_by(book_id=1,page_id=page).first()
+
     # return render_template('100_floor/innerbook.html', 
-    #                     username =session["username"],
-    #                     img_name = page_conf[idx]['img_name'],
-    #                     audio_name = page_conf[idx]['audio_name'],
-    #                     question_name = question.audio,
-    #                     next_page=page_conf[idx]['next_page'],
-    #                     ans_path = question.ans_audio,  
-    #                     keys=ans_keys_100[idx])
-    return render_template('100_floor/innerbook.html', 
-                           username =session["username"],
-                           img_name = page_conf[idx]['img_name'],
-                           audio_name = page_conf[idx]['audio_name'],
-                           question_name = page_conf[idx]['question_name'],
-                           next_page=page_conf[idx]['next_page'],
-                           ans_path = page_conf[idx]['ans_path'],  
-                           keys=ans_keys_100[idx]) 
+    #                        username =session["username"],
+    #                        img_name = page_conf[idx]['img_name'],
+    #                        audio_name = page_conf[idx]['audio_name'],
+    #                        question_name = page_conf[idx]['question_name'],
+    #                        next_page=page_conf[idx]['next_page'],
+    #                        ans_path = page_conf[idx]['ans_path'],  
+    #                        keys=ans_keys_100[idx]) 
 
 
 
