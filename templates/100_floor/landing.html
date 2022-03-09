@@ -21,7 +21,7 @@
               {% block content %}
                 <div style='float:right; margin-right:5%;margin-bottom:10px;'>
                   <button id="copy_button" class="btn btn-primary" 
-                    onclick="location.href='{{ url_for(next_url)}}'">Next
+                    onclick="location.href='{{ url_for('100_floor.innerbook', page=next_page)}}'">Next
                   </button>
                 </div>
                 
@@ -67,7 +67,7 @@
       <script>
           prompt_ans = {{ans_path|tojson}}
           keywords = {{keys|tojson}}
-          window.url = '{{ url_for(next_url)}}'
+          window.url = {{ url_for('100_floor.innerbook', page=next_page)}}
       </script>
   </body>
 </html>
