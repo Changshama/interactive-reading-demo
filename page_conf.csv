@@ -1,9 +1,9 @@
-id,img_name,audio_name,next_page,question_name,ans_path,ans_key
+id,img_name,audio_name,next_page,que_audio,ans_audio,ans_keys
 page1,page1.png,page1.wav,2,,,[]
 page2,page2.png,page2.wav,3,,,[]
 page3,page3.png,page3.wav,4,,,[]
-page4,page4.png,page4.wav,5,question-page4.wav,static/audio/100/answer-page4.wav,"['运动', '老鼠']"
-page5,page5.png,page5.wav,6,question-page5.wav,static/audio/100/answer-page5.wav,"['磨牙', '松鼠']"
+page4,page4.png,page4.wav,5,,,[]
+page5,page5.png,page5.wav,6,,,[]
 page6,page6.png,page6.wav,7,,,[]
 page7,page7.png,page7.wav,8,,,[]
 page8,page8.png,page8.wav,9,,,[]
