@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>100-floor-building</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/style/web-speech.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  </head>
+  <body>
+      <main>
+          <h3 class="text-center">100层的房子</h3>
+          <div class="container">
+            <div class="first-div">
+              <div style='margin:0 auto;'>
+                <img src="{{ url_for('static', filename='images/100/'+img_name) }}" class='imgDetails'>
+              </div>
+            </div>
+            <div class="second-div">
+              {% block content %}
+                <div style='float:right; margin-right:5%;margin-bottom:10px;'>
+                  <button id="copy_button" class="btn btn-primary" 
+                    onclick="location.href='{{ url_for('100_floor.innerbook', page=next_page)}}'">Next
+                  </button>
+                </div>
+                <p></p>
+                <div style="font-size:1.2em;margin-left:60px;">{{username}}, listen to book</div>
+                {% if 'wav' in question_name %}                                   
+                  <div style='margin-left:60px;margin-bottom:10px;'>
+                    <audio id='modelreading' controls="controls" autoplay="autoplay" 
+                    src="{{ url_for('static', filename='audio/100/'+audio_name) }}" type="audio/wav"></audio>
+                  </div>
+                  <p></p>
+                  <div>
+                      <div style="font-size:1.2em;margin-left:60px;">{{username}}, listen to questions</div>  
+                  </div>
+                  <p></p>
+                  <div id = 'question_audio' style='margin-left:60px;margin-bottom:10px;'>
+                    <audio id="promptquestion" controls="controls"  autostart="false"
+                            src="{{ url_for('static', filename='audio/100/'+question_name) }}" type="audio/wav">
+                    </audio>
+                  </div>
+                    <script>
+                      var audio_link = document.getElementById('promptquestion');
+                      var audio_reading = document.getElementById('modelreading');
+                      audio_reading.onended = function(){                          
+                        audio_link.play();
+                      };
+                    </script>
+
+                      <div id="info"></div>
+                      <div class="float-right">
+                        <button id="start_button">
+                          <img id="start_img" src="static/images/mic.gif" alt="Start"></button>
+                      </div>
+                      <div id="results">
+                        <span id="final_span" class="final"></span>
+                        <span id="interim_span" class="interim"></span>
+                        <p>
+                      </div>
+                      <div class="row col-12 p-0 m-0">
+                        <div class="row col-12 col-md-8 col-lg-6 p-0 m-0">
+                            <select id="select_language"></select>
+                            <select id="select_dialect"></select>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-6 mt-3 mt-md-0 p-0 m-0">
+                          <div class="float-right">
+                            <!-- <button id="copy_button" class="btn btn-primary ">Copy</button> -->
+                          </div>
+                        </div>
+                      </div>
+                                  
+                {% else %}
+                  <div style='margin-left:60px;'>
+                    <audio id='modelreading-2' controls="controls" autoplay="autoplay" 
+                    src="{{ url_for('static', filename='audio/100/'+audio_name) }}" type="audio/wav"></audio>
+                  </div>                
+                  <script>
+                    audio = document.getElementById('modelreading-2');
+                    function redirectHandler() {
+                      window.location.href = "{{ url_for('100_floor.innerbook', page=next_page)}}";
+                    }
+                    audio.addEventListener('ended', redirectHandler, false);
+                  </script>
+                {% endif %}
+              </div>
+              {% endblock content %}                         
+            </div>
+
+      </main>
+      <script src="static/js/languages.js"></script>
+      <script src={{ url_for('static', filename='js/web-speech-api.js') }}></script>
+      <script>
+          prompt_ans = {{ans_path|tojson}}
+          keywords = {{keys|tojson}}
+          window.url = "{{ url_for('100_floor.innerbook', page=next_page)}}"
+      </script>
+  </body>
+</html>
