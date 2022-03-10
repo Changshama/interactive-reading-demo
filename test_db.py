@@ -3,10 +3,11 @@ import functools
 import wave
 from flask import Flask, views, request, flash, redirect, Response, render_template, Blueprint, current_app, session, url_for
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Table
 
 app = Flask(__name__)
 app.secret_key = "thisisit"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cocotest5.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cocotest.db'
 db = SQLAlchemy(app)
 
 # testing
