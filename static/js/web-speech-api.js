@@ -36,6 +36,7 @@ var recognizing = false;
 var ignore_onend;
 var start_timestamp;
 var recognition;
+var answered = false;
 
 $( document ).ready(function() {
   for (var i = 0; i < langs.length; i++) {
@@ -127,8 +128,15 @@ $( document ).ready(function() {
         //     return;
         //   }
         // }, 7.0*1000);
-      sound_effect = new Audio('static/audio/floop2_x.wav');
-      sound_effect.play();
+      if (answered) {
+          sound_effect = new Audio('static/audio/chime_up.wav');
+          sound_effect.play();          
+      }
+      else {
+          sound_effect = new Audio('static/audio/floop2_x.wav');
+          sound_effect.play();          
+        }
+
     });
        
     recognition.onresult = function (event) {         
@@ -149,6 +157,7 @@ $( document ).ready(function() {
         }
       }
       if (temp) {
+        answered = true;
         final_transcript = temp;
       }
 
