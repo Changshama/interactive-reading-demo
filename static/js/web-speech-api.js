@@ -128,9 +128,21 @@ $( document ).ready(function() {
         //     return;
         //   }
         // }, 7.0*1000);
+      var answer_data = [
+        {"question": question_id},
+        {"result": answered}
+      ];
+      $.ajax({
+        type: "POST",
+        url: "process_answer",
+        data: JSON.stringify(answer_data),
+        contentType: "application/json",
+        dataType: 'json'
+      });
+      
       if (answered) {
-          sound_effect = new Audio('static/audio/chime_up.wav');
-          sound_effect.play();          
+        sound_effect = new Audio('static/audio/chime_up.wav');
+        sound_effect.play();         
       }
       else {
           sound_effect = new Audio('static/audio/floop2_x.wav');
