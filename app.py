@@ -3,13 +3,13 @@ import functools
 import wave
 from flask import Flask, jsonify, views, request, flash, redirect, Response, render_template, Blueprint, current_app, session, url_for
 from sqlalchemy import Table
-from views import bp_nemo,login_required
+from views import login_required,page_config
 from flask_sqlalchemy import SQLAlchemy
 import csv
 
 app = Flask(__name__)
 app.secret_key = "thisisit"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cocotest.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///coco.db'
 db = SQLAlchemy(app)
 
 
@@ -20,20 +20,9 @@ class Question(db.Model):
     __table__ = Table('question', db.metadata,
                     autoload=True, autoload_with=db.engine)
 
-
-bp_100 = Blueprint('100_floor', __name__, static_folder='static',
-               template_folder='templates')
-
-with open('page_conf.csv') as f:
-    page_conf = [{k: v for k, v in row.items()}
-        for row in csv.DictReader(f, skipinitialspace=True)]
-f.close()
-
-@bp_100.route('/landing')
-@login_required
-def landing():
+def question_conf(page_conf, uname, bookId, path_dir):
     # filter out questions answered (correctly) by this user
-    user = db.session.query(User).filter_by(username = session["username"]).first()
+    user = db.session.query(User).filter_by(username = uname).first()
     que_answered = []
     if len(user.que_answered) > 0:
       que_answered = list(map(int, user.que_answered.split(';')))
@@ -44,10 +33,10 @@ def landing():
 
     # create question for all pages
     for page in range(1, len(page_conf)):
-      page_que = question.filter_by(book_id=1,level=user.level, page_id=page).first()
+      page_que = question.filter_by(book_id=bookId,level=user.level, page_id=page).first()
       if page_que:
         page_conf[page-1]['que_audio'] = page_que.audio
-        page_conf[page-1]['ans_audio'] = 'static/audio/100/'+page_que.ans_audio
+        page_conf[page-1]['ans_audio'] = path_dir+page_que.ans_audio
         page_conf[page-1]['ans_keys'] = page_que.ans_keys.split(';')
         page_conf[page-1]['que_id'] = page_que.id
 
@@ -56,6 +45,74 @@ def landing():
         page_conf[page-1]['ans_audio'] = ''        
         page_conf[page-1]['ans_keys'] = []
         page_conf[page-1]['que_id'] = 0
+
+    return page_conf
+
+
+bp_100 = Blueprint('100_floor', __name__, static_folder='static',
+               template_folder='templates')
+
+page_conf = page_config('page_conf.csv')
+
+bp_nemo = Blueprint('nemo', __name__, static_folder='static',
+               template_folder='templates')
+
+page_conf_nemo = page_config('page_conf_nemo.csv')
+
+@bp_nemo.route('/landing')
+@login_required
+def landing():
+    uname = session["username"]
+    question_conf(page_conf_nemo, uname, 2, 'static/audio/nemo/')
+
+    return render_template('nemo/landing.html', 
+                            username =session["username"],
+                            question_name = 'landing-question-nemo.wav',
+                            next_page = 1,
+                            que_id = 0,
+                            ans_path = "static/audio/start-reading-nemo.wav",
+                            keys=['Ok','Yes','Ready'])
+
+@bp_nemo.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  if request.method == "POST":
+    ans_data = request.get_json()
+    user = db.session.query(User).filter_by(username = session["username"]).first()
+    que_answered_before = user.que_answered
+
+    print(ans_data[0]['question'],ans_data[1]['result'])
+
+    # update que answered for the session user
+    if ans_data[0]['question'] > 0 and ans_data[1]['result']:
+      if que_answered_before:
+        user.que_answered += ';'+ str(ans_data[0]['question'])
+      else:
+        user.que_answered += str(ans_data[0]['question'])
+      db.session.commit()
+      print('db updated!')
+    
+    return 'ok'
+
+@bp_nemo.route('/<int:page>')
+@login_required
+def innerbook(page):
+    idx = page - 1    
+    return render_template('nemo/innerbook.html', 
+                        username =session["username"],
+                        img_name = page_conf_nemo[idx]['img_name'],
+                        audio_name = page_conf_nemo[idx]['audio_name'],
+                        question_name = page_conf_nemo[idx]['que_audio'],
+                        next_page=page_conf_nemo[idx]['next_page'],
+                        ans_path = page_conf_nemo[idx]['ans_audio'],  
+                        keys=page_conf_nemo[idx]['ans_keys'],
+                        que_id = page_conf_nemo[idx]['que_id'])
+
+
+@bp_100.route('/landing')
+@login_required
+def landing():
+    uname = session["username"]
+    question_conf(page_conf, uname, 1, 'static/audio/100/')
 
     return render_template('100_floor/landing.html', 
                             username =session["username"],
@@ -100,9 +157,6 @@ def innerbook(page):
                         keys=page_conf[idx]['ans_keys'],
                         que_id = page_conf[idx]['que_id'])
 
-nemo_1_keys = ['Orange', 'Stripe', 'Black', 'White', 'orange', 'white']
-nemo_2_keys = ['Forget', 'Remember', 'Memory', 'loss', 'Issue', 'forget', 'remember']
-
 class Main(views.MethodView):
     def get(self):
         return render_template('index.html')
@@ -126,6 +180,10 @@ class Main(views.MethodView):
             flash("Username doesn't exist or incorrect password")
         return redirect(url_for('index'))
 
+#obseleted code starts
+nemo_1_keys = ['Orange', 'Stripe', 'Black', 'White', 'orange', 'white']
+nemo_2_keys = ['Forget', 'Remember', 'Memory', 'loss', 'Issue', 'forget', 'remember']
+
 bp_nemo_1 = Blueprint('nemo_1', __name__, static_folder='static',
                template_folder='templates')
 bp_nemo_2 = Blueprint('nemo_2', __name__, static_folder='static',
@@ -145,6 +203,7 @@ def index():
                            ans_path = "static/audio/prompt-dory-anw.wav", 
                            username =session["username"], 
                            keys=nemo_2_keys)
+#obseleted code ends
 
 app.add_url_rule('/',
                  view_func=Main.as_view('index'),
