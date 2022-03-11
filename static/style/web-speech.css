@@ -37,6 +37,12 @@ body{
   height:650px;
   width:400px; 
 } 
+.imgHDetails {
+  margin-left:20%;
+  float:left; 
+  height:500px;
+  width:400px; 
+}
 .container{
   width:100%;
   display:flex;
