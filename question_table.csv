@@ -8,6 +8,10 @@ id,book_id,page_id,level,audio,ans_audio,ans_key
 7,1,14,2,que-page14.wav,ans-page14.wav,大;胖
 8,1,18,3,que-page18.wav,ans-page18.wav,倒立;倒着;吊
 9,2,2,1,que-p2.wav,ans-p2.wav,Marlin;Child;Son
-10,2,2,2,que-p2-2.wav,ans-p2-2.wav,Die;Kill;Hurt;Attack
-11,2,3,2,que-p3.wav,ans-p3.wav,Safe;Worries;Worried;Danger
-12,2,5,1,que-p5.wav,ans-p5.wav,Diver;Trap;Boat;Caught
+10,2,2,2,que-p2-2.wav,ans-p2-2.wav,die;kill;hurt;attack
+11,2,3,2,que-p3.wav,ans-p3.wav,safe;worries;worried;danger
+12,2,5,1,que-p5.wav,ans-p5.wav,diver;trap;boat;caught
+13,3,2,1,que-p2.wav,ans-p2.wav,不;没;海藻
+14,3,4,2,que-p4.wav,ans-p4.wav,动物;工具
+15,3,8,1,que-p8.wav,ans-p8.wav,不;没
+16,3,8,3,que-p8-2.wav,ans-p8-2.wav,扮;海藻;妖怪;吓
