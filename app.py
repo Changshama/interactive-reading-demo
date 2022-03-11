@@ -59,6 +59,59 @@ bp_nemo = Blueprint('nemo', __name__, static_folder='static',
 
 page_conf_nemo = page_config('page_conf_nemo.csv')
 
+bp_baba = Blueprint('baba', __name__, static_folder='static',
+               template_folder='templates')
+
+page_conf_baba = page_config('page_conf_baba.csv')
+
+@bp_baba.route('/landing')
+@login_required
+def landing():
+    uname = session["username"]
+    question_conf(page_conf_baba, uname, 3, 'static/audio/baba/')
+
+    return render_template('baba/landing.html', 
+                            username =session["username"],
+                            question_name = 'landing-question.wav',
+                            next_page = 1,
+                            que_id = 0,
+                            ans_path = "static/audio/landing-baba.wav",
+                            keys=['Ok','Yes','Ready','好了','准备'])
+
+@bp_baba.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  if request.method == "POST":
+    ans_data = request.get_json()
+    user = db.session.query(User).filter_by(username = session["username"]).first()
+    que_answered_before = user.que_answered
+
+    print(ans_data[0]['question'],ans_data[1]['result'])
+
+    # update que answered for the session user
+    if ans_data[0]['question'] > 0 and ans_data[1]['result']:
+      if que_answered_before:
+        user.que_answered += ';'+ str(ans_data[0]['question'])
+      else:
+        user.que_answered += str(ans_data[0]['question'])
+      db.session.commit()
+      print('db updated!')
+    
+    return 'ok'
+
+@bp_baba.route('/<int:page>')
+@login_required
+def innerbook(page):
+    idx = page - 1    
+    return render_template('baba/innerbook.html', 
+                        username =session["username"],
+                        img_name = page_conf_baba[idx]['img_name'],
+                        audio_name = page_conf_baba[idx]['audio_name'],
+                        question_name = page_conf_baba[idx]['que_audio'],
+                        next_page=page_conf_baba[idx]['next_page'],
+                        ans_path = page_conf_baba[idx]['ans_audio'],  
+                        keys=page_conf_baba[idx]['ans_keys'],
+                        que_id = page_conf_baba[idx]['que_id'])
+
 @bp_nemo.route('/landing')
 @login_required
 def landing():
@@ -180,39 +233,40 @@ class Main(views.MethodView):
             flash("Username doesn't exist or incorrect password")
         return redirect(url_for('index'))
 
-#obseleted code starts
-nemo_1_keys = ['Orange', 'Stripe', 'Black', 'White', 'orange', 'white']
-nemo_2_keys = ['Forget', 'Remember', 'Memory', 'loss', 'Issue', 'forget', 'remember']
+# #obseleted code starts
+# nemo_1_keys = ['Orange', 'Stripe', 'Black', 'White', 'orange', 'white']
+# nemo_2_keys = ['Forget', 'Remember', 'Memory', 'loss', 'Issue', 'forget', 'remember']
 
-bp_nemo_1 = Blueprint('nemo_1', __name__, static_folder='static',
-               template_folder='templates')
-bp_nemo_2 = Blueprint('nemo_2', __name__, static_folder='static',
-               template_folder='templates')
+# bp_nemo_1 = Blueprint('nemo_1', __name__, static_folder='static',
+#                template_folder='templates')
+# bp_nemo_2 = Blueprint('nemo_2', __name__, static_folder='static',
+#                template_folder='templates')
 
 
-@bp_nemo_1.route('/')
-def index():
-    return render_template('nemo_1/index.html', 
-                           ans_path = "static/audio/prompt_answer.wav", 
-                           username =session["username"],
-                           keys=nemo_1_keys) 
+# @bp_nemo_1.route('/')
+# def index():
+#     return render_template('nemo_1/index.html', 
+#                            ans_path = "static/audio/prompt_answer.wav", 
+#                            username =session["username"],
+#                            keys=nemo_1_keys) 
 
-@bp_nemo_2.route('/')
-def index():
-    return render_template('nemo_2/index.html', 
-                           ans_path = "static/audio/prompt-dory-anw.wav", 
-                           username =session["username"], 
-                           keys=nemo_2_keys)
-#obseleted code ends
+# @bp_nemo_2.route('/')
+# def index():
+#     return render_template('nemo_2/index.html', 
+#                            ans_path = "static/audio/prompt-dory-anw.wav", 
+#                            username =session["username"], 
+#                            keys=nemo_2_keys)
+## obseleted code ends
 
 app.add_url_rule('/',
                  view_func=Main.as_view('index'),
                  methods=["GET", "POST"])
 
-app.register_blueprint(bp_nemo_1, url_prefix='/nemo_1')
-app.register_blueprint(bp_nemo_2, url_prefix='/nemo_2')
+# app.register_blueprint(bp_nemo_1, url_prefix='/nemo_1')
+# app.register_blueprint(bp_nemo_2, url_prefix='/nemo_2')
 app.register_blueprint(bp_100, url_prefix='/100_floor')
 app.register_blueprint(bp_nemo, url_prefix='/nemo')
+app.register_blueprint(bp_baba, url_prefix='/baba')
 
 # with app.app_context():
 #     db.create_all()
