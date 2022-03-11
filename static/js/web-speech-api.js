@@ -42,9 +42,9 @@ $( document ).ready(function() {
   for (var i = 0; i < langs.length; i++) {
     select_language.options[i] = new Option(langs[i][0], i);
   }
-  select_language.selectedIndex = 29;
+  select_language.selectedIndex = lang_idx;
   updateCountry();
-  select_dialect.selectedIndex = 0;
+  select_dialect.selectedIndex = dial_idx;
   
   if (!('webkitSpeechRecognition' in window)) {
     upgrade();
