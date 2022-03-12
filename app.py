@@ -32,7 +32,7 @@ def question_conf(page_conf, uname, bookId, path_dir):
     question = db.session.query(Question).filter(~Question.id.in_(que_answered))
 
     # create question for all pages
-    for page in range(1, len(page_conf)):
+    for page in range(1, len(page_conf)+1):
       page_que = question.filter_by(book_id=bookId,level=user.level, page_id=page).first()
       if page_que:
         page_conf[page-1]['que_audio'] = page_que.audio
@@ -76,7 +76,7 @@ def landing():
                             next_page = 1,
                             que_id = 0,
                             ans_path = "static/audio/landing-baba.wav",
-                            keys=['Ok','Yes','Ready','好了','准备'])
+                            keys=['ok','yes','ready','好了','准备'])
 
 @bp_baba.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -124,7 +124,7 @@ def landing():
                             next_page = 1,
                             que_id = 0,
                             ans_path = "static/audio/start-reading-nemo.wav",
-                            keys=['Ok','Yes','Ready'])
+                            keys=['ok','yes','ready'])
 
 @bp_nemo.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
