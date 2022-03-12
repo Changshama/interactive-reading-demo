@@ -77,11 +77,15 @@
                     src="{{ url_for('static', filename='audio/baba/'+audio_name) }}" type="audio/wav"></audio>
                   </div>                
                   <script>
-                    audio = document.getElementById('modelreading-2');
+                    audio_reading = document.getElementById('modelreading-2');
+                    flip_audio = new Audio('static/audio/chime_up.wav')
+                    audio_reading.onended = function(){                                                
+                      flip_audio.play();
+                    };                    
                     function redirectHandler() {
                       window.location.href = "{{ url_for('baba.innerbook', page=next_page)}}";
                     }
-                    audio.addEventListener('ended', redirectHandler, false);
+                    flip_audio.addEventListener('ended', redirectHandler, false);
                   </script>
                 {% endif %}
               </div>
