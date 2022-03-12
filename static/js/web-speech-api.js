@@ -120,20 +120,20 @@ $( document ).ready(function() {
           contentType: "application/json",
           dataType: 'json'
         });
+        if (answered) {
+          sound_flip('static/audio/kids_cheering.wav')
+        }
+        else {
+          sound_flip('static/audio/floop2_x.wav');
+        }
 
       }
 
 
     };
 
-    recognition.addEventListener('speechend', function () {   
-      if (answered) {
-        sound_flip('static/audio/kids_cheering.wav')
-      }
-      else {
-        sound_flip('static/audio/floop2_x.wav');
-      }
-       
+    recognition.addEventListener('speechend', function () {
+      recognizing = false;
     });
        
     recognition.onresult = function (event) {         
