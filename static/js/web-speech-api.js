@@ -52,7 +52,7 @@ $( document ).ready(function() {
     showInfo('start');
     start_button.style.display = 'inline-block';
     recognition = new webkitSpeechRecognition() || new SpeechRecognition();;
-    recognition.continuous = true;
+    recognition.continuous = false;
     recognition.interimResults = true;
 
     /*once question was asked, recognition auto starts immediately*/
@@ -109,46 +109,31 @@ $( document ).ready(function() {
       }
 
       if (final_transcript) {
-        answer_audio = new Audio(prompt_ans);
-        answer_audio.play();
-        answer_audio.onended = function(){                          
-            redirectHandler(url);
-        };
+        var answer_data = [
+          {"question": question_id},
+          {"result": answered}
+        ];
+        $.ajax({
+          type: "POST",
+          url: "process_answer",
+          data: JSON.stringify(answer_data),
+          contentType: "application/json",
+          dataType: 'json'
+        });
+
       }
 
 
     };
 
-    recognition.addEventListener('speechend', function() {
-        //   timeoutHandle = window.setTimeout(function () {
-        //   if (recognizing) {
-        //     recognition.stop();
-        //     sound_effect = new Audio('static/audio/floop2_x.wav');
-        //     sound_effect.play();
-        //     return;
-        //   }
-        // }, 7.0*1000);
-      var answer_data = [
-        {"question": question_id},
-        {"result": answered}
-      ];
-      $.ajax({
-        type: "POST",
-        url: "process_answer",
-        data: JSON.stringify(answer_data),
-        contentType: "application/json",
-        dataType: 'json'
-      });
-      
+    recognition.addEventListener('speechend', function () {   
       if (answered) {
-        sound_effect = new Audio('static/audio/chime_up.wav');
-        sound_effect.play();         
+        sound_flip('static/audio/kids_cheering.wav')
       }
       else {
-          sound_effect = new Audio('static/audio/floop2_x.wav');
-          sound_effect.play();          
-        }
-
+        sound_flip('static/audio/floop2_x.wav');
+      }
+       
     });
        
     recognition.onresult = function (event) {         
@@ -164,7 +149,8 @@ $( document ).ready(function() {
       }
       var temp = '';
       for (var i = 0; i < keywords.length; i++){
-        if (final_transcript.includes(keywords[i])){
+        if (final_transcript.toLowerCase().includes(keywords[i].toLowerCase())) {
+          
           temp += keywords[i] + ';';
         }
       }
@@ -261,6 +247,22 @@ function initialize() {
   start_timestamp = event.timeStamp;
 }
 
+function sound_flip(sound_effect_path) {
+    sound_effect = new Audio(sound_effect_path);
+    sound_effect.play();
+    sound_effect.onended = function () {
+      answer_audio = new Audio(prompt_ans);
+      answer_audio.play();
+      answer_audio.onended = function () {
+        flip_audio = new Audio('static/audio/chime_up.wav');
+
+        flip_audio.play();
+        flip_audio.onended = function () {                                 
+            redirectHandler(url);
+        };
+      }
+    }
+}
 
 function showInfo(s) {
   if (s) {
