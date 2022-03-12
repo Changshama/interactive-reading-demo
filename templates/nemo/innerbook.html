@@ -13,6 +13,11 @@
           <h3 class="text-center">Finding Nemo</h3>
           <div class="container">
             <div class="first-div">
+                <div style='float:left; margin-left:5%;margin-bottom:10px;'>
+                  <button id="copy_button" class="btn btn-primary" 
+                    onclick="location.href='{{ url_for('index')}}'">Home
+                  </button>
+                </div>
               <div style='margin:0 auto;'>
                 <img src="{{ url_for('static', filename='images/nemo/'+img_name) }}" class='imgDetails'>
               </div>
