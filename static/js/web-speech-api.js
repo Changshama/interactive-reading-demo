@@ -103,7 +103,7 @@ $( document ).ready(function() {
       if (ignore_onend) {
         return;
       }
-      if (count > 1 || count > 0 && event.timeStamp - speechStart_ts > 1000) {
+      if (count > cnt_max || count > 0 && event.timeStamp - speechStart_ts > 5000) {
         next_page();
       }
       else {
