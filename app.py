@@ -54,6 +54,11 @@ bp_100 = Blueprint('100_floor', __name__, static_folder='static',
 
 page_conf = page_config('page_conf.csv')
 
+bp_ft = Blueprint('firetruck', __name__, static_folder='static',
+               template_folder='templates')
+
+page_conf_firetruck = page_config('page_conf_firetruck.csv')
+
 bp_nemo = Blueprint('nemo', __name__, static_folder='static',
                template_folder='templates')
 
@@ -63,6 +68,55 @@ bp_baba = Blueprint('baba', __name__, static_folder='static',
                template_folder='templates')
 
 page_conf_baba = page_config('page_conf_baba.csv')
+
+@bp_ft.route('/landing')
+@login_required
+def landing():
+    uname = session["username"]
+    question_conf(page_conf_firetruck, uname, 4, 'static/audio/firetruck/')
+
+    return render_template('firetruck/landing.html', 
+                            username =session["username"],
+                            question_name = 'landing-question.wav',
+                            next_page = 1,
+                            que_id = 0,
+                            ans_path = "static/audio/start-reading.wav",
+                            keys=['ok','yes','ready','好了','准备'])
+
+@bp_ft.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  if request.method == "POST":
+    ans_data = request.get_json()
+    user = db.session.query(User).filter_by(username = session["username"]).first()
+    que_answered_before = user.que_answered
+
+    print(ans_data[0]['question'],ans_data[1]['result'])
+
+    # update que answered for the session user
+    if ans_data[0]['question'] > 0 and ans_data[1]['result']:
+      if que_answered_before:
+        user.que_answered += ';'+ str(ans_data[0]['question'])
+      else:
+        user.que_answered += str(ans_data[0]['question'])
+      db.session.commit()
+      print('db updated!')
+    
+    return 'ok'
+
+@bp_ft.route('/<int:page>')
+@login_required
+def innerbook(page):
+    idx = page - 1    
+    return render_template('firetruck/innerbook.html', 
+                        username =session["username"],
+                        img_name = page_conf_firetruck[idx]['img_name'],
+                        audio_name = page_conf_firetruck[idx]['audio_name'],
+                        question_name = page_conf_firetruck[idx]['que_audio'],
+                        next_page=page_conf_firetruck[idx]['next_page'],
+                        ans_path = page_conf_firetruck[idx]['ans_audio'],  
+                        keys=page_conf_firetruck[idx]['ans_keys'],
+                        que_id = page_conf_firetruck[idx]['que_id'])
+
 
 @bp_baba.route('/landing')
 @login_required
@@ -267,7 +321,7 @@ app.add_url_rule('/',
 app.register_blueprint(bp_100, url_prefix='/100_floor')
 app.register_blueprint(bp_nemo, url_prefix='/nemo')
 app.register_blueprint(bp_baba, url_prefix='/baba')
-
+app.register_blueprint(bp_ft, url_prefix='/firetruck')
 # with app.app_context():
 #     db.create_all()
 
