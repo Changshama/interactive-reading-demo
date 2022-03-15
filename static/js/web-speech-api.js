@@ -35,9 +35,10 @@ var final_transcript = '';
 var recognizing = false;
 var ignore_onend;
 var start_timestamp;
+var speechStart_ts;
 var recognition;
 var answered = false;
-
+var count;
 $( document ).ready(function() {
   for (var i = 0; i < langs.length; i++) {
     select_language.options[i] = new Option(langs[i][0], i);
@@ -51,7 +52,7 @@ $( document ).ready(function() {
   } else {
     showInfo('start');
     start_button.style.display = 'inline-block';
-    recognition = new webkitSpeechRecognition() || new SpeechRecognition();;
+    recognition = new webkitSpeechRecognition() || new SpeechRecognition();
     recognition.continuous = false;
     recognition.interimResults = true;
 
@@ -68,11 +69,17 @@ $( document ).ready(function() {
     };
 
     recognition.onerror = function(event) {
-      if (event.error == 'no-speech') {
+      if (event.error == 'no-speech' && count === 0) {
         start_img.src = 'static/images/mic.gif';
         showInfo('no_speech');
-        tip_audio = new Audio('static/audio/click_microphone_tip.wav');
-        tip_audio.play();
+        if (lang_idx === 6) {
+          tip_audio = new Audio('static/audio/click_microphone_eng.wav');
+          tip_audio.play();
+        }
+        if (lang_idx === 29) {
+          tip_audio = new Audio('static/audio/click_microphone_tip.wav');
+          tip_audio.play();
+        }
         ignore_onend = true;
       }
       if (event.error == 'audio-capture') {
@@ -88,54 +95,24 @@ $( document ).ready(function() {
         }
         ignore_onend = true;
       }
+
     };
 
-    recognition.onend = function () {     
+    recognition.onend = function () {
       recognizing = false;
       if (ignore_onend) {
         return;
       }
-      start_img.src = 'static/images/mic.gif';
-      if (!final_transcript) {
-        showInfo('start');
-        return;
+      if (count > 1 || count > 0 && event.timeStamp - speechStart_ts > 1000) {
+        next_page();
       }
-      showInfo('stop');
-      if (window.getSelection) {
-        window.getSelection().removeAllRanges();
-        var range = document.createRange();
-        range.selectNode(document.getElementById('final_span'));
-        window.getSelection().addRange(range);
+      else {
+        count++;
+        recognition.start(); //keep listening
+        speechStart_ts = event.timeStamp;
       }
-
-      if (final_transcript) {
-        var answer_data = [
-          {"question": question_id},
-          {"result": answered}
-        ];
-        $.ajax({
-          type: "POST",
-          url: "process_answer",
-          data: JSON.stringify(answer_data),
-          contentType: "application/json",
-          dataType: 'json'
-        });
-        if (answered) {
-          sound_flip('static/audio/kids_cheering.wav')
-        }
-        else {
-          sound_flip('static/audio/floop2_x.wav');
-        }
-
-      }
-
-
     };
 
-    recognition.addEventListener('speechend', function () {
-      recognizing = false;
-    });
-       
     recognition.onresult = function (event) {         
       var interim_transcript = '';
 
@@ -236,6 +213,7 @@ $("#select_language").change(function () {
 });
 
 function initialize() {
+  count = 0;
   final_transcript = '';
   recognition.lang = select_dialect.value;
   recognition.start();
@@ -246,7 +224,39 @@ function initialize() {
   showInfo('allow');
   start_timestamp = event.timeStamp;
 }
+function next_page() {
+    start_img.src = 'static/images/mic.gif';
+    if (!final_transcript) {
+      showInfo('start');
+      return;
+    }
+    showInfo('stop');
+    if (window.getSelection) {
+      window.getSelection().removeAllRanges();
+      var range = document.createRange();
+      range.selectNode(document.getElementById('final_span'));
+      window.getSelection().addRange(range);
+    }
+ 
+    var answer_data = [
+      { "question": question_id },
+      { "result": answered }
+    ];
+    $.ajax({
+      type: "POST",
+      url: "process_answer",
+      data: JSON.stringify(answer_data),
+      contentType: "application/json",
+      dataType: 'json'
+    });
+    if (answered) {
+      sound_flip('static/audio/kids_cheering.wav')
+    }
+    else {
+      sound_flip('static/audio/floop2_x.wav');
+    }
 
+}
 function sound_flip(sound_effect_path) {
     sound_effect = new Audio(sound_effect_path);
     sound_effect.play();
@@ -254,7 +264,7 @@ function sound_flip(sound_effect_path) {
       answer_audio = new Audio(prompt_ans);
       answer_audio.play();
       answer_audio.onended = function () {
-        flip_audio = new Audio('static/audio/chime_up.wav');
+        flip_audio = new Audio('static/audio/chime.wav');
 
         flip_audio.play();
         flip_audio.onended = function () {                                 
