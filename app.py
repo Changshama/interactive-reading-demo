@@ -115,6 +115,7 @@ def innerbook(page):
                         next_page=page_conf_firetruck[idx]['next_page'],
                         ans_path = page_conf_firetruck[idx]['ans_audio'],  
                         keys=page_conf_firetruck[idx]['ans_keys'],
+                        count_max=page_conf_firetruck[idx]['count_max'],
                         que_id = page_conf_firetruck[idx]['que_id'])
 
 
