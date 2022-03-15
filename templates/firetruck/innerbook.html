@@ -34,7 +34,7 @@
                 {% if 'wav' in question_name %}                                   
                   <div style='margin-left:60px;margin-bottom:10px;'>
                     <audio id='modelreading' controls="controls" autoplay="autoplay" 
-                    src="{{ url_for('static', filename='audio/baba/'+audio_name) }}" type="audio/wav"></audio>
+                    src="{{ url_for('static', filename='audio/firetruck/'+audio_name) }}" type="audio/wav"></audio>
                   </div>
                   <p></p>
                   <div>
@@ -106,6 +106,7 @@
           question_id = {{que_id|tojson}}
           lang_idx = {{29|tojson}}
           dial_idx = {{0|tojson}}
+          cnt_max = {{count_max|tojson}}
           window.url = "{{ url_for('firetruck.innerbook', page=next_page)}}"
       </script>
   </body>
