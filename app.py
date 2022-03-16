@@ -39,6 +39,7 @@ def question_conf(page_conf, uname, bookId, path_dir):
         page_conf[page-1]['ans_audio'] = path_dir+page_que.ans_audio
         page_conf[page-1]['ans_keys'] = page_que.ans_keys.split(';')
         page_conf[page-1]['que_id'] = page_que.id
+        page_conf[page-1]['count_max'] = page_que.count_max
 
       else:
         page_conf[page-1]['que_audio'] = ''
@@ -81,7 +82,8 @@ def landing():
                             next_page = 1,
                             que_id = 0,
                             ans_path = "static/audio/start-reading.wav",
-                            keys=['ok','yes','ready','好了','准备'])
+                            keys=['ok','yes','ready','好了','准备'],
+                            count_max=0)
 
 @bp_ft.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -131,7 +133,8 @@ def landing():
                             next_page = 1,
                             que_id = 0,
                             ans_path = "static/audio/landing-baba.wav",
-                            keys=['ok','yes','ready','好了','准备'])
+                            keys=['ok','yes','ready','好了','准备'],
+                            count_max=0)
 
 @bp_baba.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -165,6 +168,7 @@ def innerbook(page):
                         next_page=page_conf_baba[idx]['next_page'],
                         ans_path = page_conf_baba[idx]['ans_audio'],  
                         keys=page_conf_baba[idx]['ans_keys'],
+                        count_max=page_conf_baba[idx]['count_max'],
                         que_id = page_conf_baba[idx]['que_id'])
 
 @bp_nemo.route('/landing')
@@ -179,7 +183,8 @@ def landing():
                             next_page = 1,
                             que_id = 0,
                             ans_path = "static/audio/start-reading-nemo.wav",
-                            keys=['ok','yes','ready'])
+                            keys=['ok','yes','ready'],
+                            count_max=0)
 
 @bp_nemo.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -213,6 +218,7 @@ def innerbook(page):
                         next_page=page_conf_nemo[idx]['next_page'],
                         ans_path = page_conf_nemo[idx]['ans_audio'],  
                         keys=page_conf_nemo[idx]['ans_keys'],
+                        count_max=page_conf_nemo[idx]['count_max'],
                         que_id = page_conf_nemo[idx]['que_id'])
 
 
@@ -228,7 +234,8 @@ def landing():
                             next_page = 1,
                             que_id = 0,
                             ans_path = "static/audio/start-reading.wav",
-                            keys=['好了','准备'])
+                            keys=['好了','准备'],
+                            count_max=0)
 
 @bp_100.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -263,6 +270,7 @@ def innerbook(page):
                         next_page=page_conf[idx]['next_page'],
                         ans_path = page_conf[idx]['ans_audio'],  
                         keys=page_conf[idx]['ans_keys'],
+                        count_max=page_conf[idx]['count_max'],
                         que_id = page_conf[idx]['que_id'])
 
 class Main(views.MethodView):
