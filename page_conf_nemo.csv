@@ -1,6 +1,6 @@
-id,img_name,audio_name,next_page,que_id,que_audio,ans_audio,ans_keys
-page1,page1.png,page1.wav,2,,,,[]
-page2,page2.png,page2.wav,3,,,,[]
-page3,page3.png,page3.wav,4,,,,[]
-page4,page4.png,page4.wav,5,,,,[]
-page5,page5.png,page5.wav,1,,,,[]
+id,img_name,audio_name,next_page,que_id,que_audio,ans_audio,count_max,ans_keys
+page1,page1.png,page1.wav,2,,,,0,[]
+page2,page2.png,page2.wav,3,,,,0,[]
+page3,page3.png,page3.wav,4,,,,0,[]
+page4,page4.png,page4.wav,5,,,,0,[]
+page5,page5.png,page5.wav,1,,,,0,[]
