@@ -16,6 +16,7 @@ que_table = Table('question', metadata,
     Column('level', Integer),
     Column('audio', String(32)),
     Column('ans_audio', String(32)),
+    Column('count_max', Integer),
     Column('ans_keys', Unicode(32)),
 )
 metadata.create_all(engine)
@@ -27,7 +28,7 @@ with open('question_table.csv', 'r', encoding="utf-8") as csvfile:
     engine.execute(
         insert_query,
         [{"book_id": row[1], "page_id": row[2], "level": row[3], 
-          "audio": row[4], "ans_audio": row[5], "ans_keys": row[6]} 
+          "audio": row[4], "ans_audio": row[5], "count_max": row[6], "ans_keys": row[7]} 
             for row in csv_reader]
     )
 
