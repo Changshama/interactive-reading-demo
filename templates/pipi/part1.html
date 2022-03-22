@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+ <html>
+     <head>
+         <title>Welcome to CocoRead!</title>
+         <link rel="stylesheet" type="text/css" href="static/style/web-speech.css" />
+         <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     </head>
+     <body>
+          <h2 style="text-align:center">屁屁侦探-消失的人气甜点（上）</h2>
+          </br>
+          </br>
+         <div class="container">
+           <div class="first-div">
+             <div id = 'home'>           
+              <li>"I smell trouble"</li>
+              </br>
+              <p>The ‘Oshiri Tantei’ series were created by Tororu (the pseudonym for the creative team of writer Yōko Tanaka and illustrator Masahide Fukasawa). Oshiri Tantei literally translates as ‘Butt Detective’. This series were among the most popular children's book in Japan.</p>
+              <p>Oshiri Tantei is the story of a Sherlock Holmesian detective. He’s a deep thinker. He solves crimes. </p>
+              </br>
+              <li>What is the story about?</li>
+              </br>
+              <p>林荫大街的“甜蜜糖果店”发生了偷盗事件，店里的恐龙化石糖、炸弹巧克力、ABC饼干...都被偷走了。
+                屁屁侦探接受委托，根据案发现场留下的脚印、目击者的证词、掉落的人气甜点等，一路追查...</p>
+              <li>Reading tips</li>
+              </br>
+              <p>屁屁侦探是如何分析店里的脚印的？脚印的主人都是谁？</p>
+              <li>Bonus</li>
+              </br>
+              <p>The butt detective Oshiri Tantei's image is based on a rare birth defect, which is Torsonic Polarity Syndrome, or TPS for short.</p>
+              <p>This condition causes a person to grow a buttocks where their head should be, making the affected a literal "butt-head". According to Stephen and Martha Thompson, more than eleven people worldwide suffer from this condition and although some may think that they would have faces where their buttocks would normally be, this is not the case. Underneath the buttocks is a fully functional face with a full set of fully functioning organs.</p>
+              <p>In South Park Season Five, the episode "How to eat with your butt" depicted two characters with this birth defect.</p>
+
+            </div>
+           </div>         
+
+         <div class="second-div">
+           <div style='margin-left:15%;margin-bottom:10px;'>
+          <h3>Read aloud (in Mandarin)</h3>
+          <audio id='modelreading' controls="controls" autostart="false" 
+                    src="{{ url_for('static', filename='audio/pipi/detective-part1.wav') }}" type="audio/wav"></audio>
+          <h3>Fun activities</h3>
+             <ul>
+                 <li><a href="https://www.youtube.com/watch?v=l_QqWcyKuTI">Fun facts about butt detective</a></li>
+                 <li><a href="https://www.youtube.com/watch?v=Mx_Y8gvZyBU&list=PLcPHTUaSk8bPgIXDnfd5qt8mdtt_E4e7q">How to draw butt detective</a></li>
+             </ul>
+          <img src="{{ url_for('static', filename='images/pipi-fp.png') }}" class='homeImg2'>
+            </div>
+        </div>
+       </div>
+
+     </body>
+ </html>
