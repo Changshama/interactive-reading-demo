@@ -14,13 +14,13 @@
            <div class="first-div">
              <div id = 'home'>           
               <h3>How does CoCoRead work?</h3>
-              <h4>For each book, CoCoRead provides a set of pedagogical questions designed for children to better
-                understand the content. The AI bot CoCo picks the right questions for the reader, 
-                the reader answers those questions, and CoCo analyzes the answers and adapts future question selection
-                to the reader's level. </h4>
+              <h4>For each book, CoCoRead provides a set of pedagogical questions designed for children to 
+                reflect on the content. The AI bot CoCo picks questions for the reader, 
+                the reader responds to those questions, and CoCo analyzes the answers and 
+                adapts the future question selection to the reader's cognitive and language level. </h4>
               <h3>Why does CoCoRead help reading?</h3>
-              <h4>Conversational reading is a research proven method of effective learning. It results in 
-                higher engagement and better comprehension.</h4>
+              <h4>Conversational reading is a research proven method of effective learning. It promotes critical
+                thinking and language skills of young children. It also leads to higher engagement and better comprehension.</h4>
             </div>
               <img src="{{ url_for('static', filename='images/question_matrix.png') }}" class='homeImg'>
            </div>         
@@ -48,12 +48,20 @@
              {{message}}
          {% endfor %}
      {% endwith %}
-          <h3>Interactive storybooks:</h3>
+          <h3>Interactive stories:</h3>
              <ul>
                  <li><a href="{{url_for('baba.landing')}}">巴巴布拉伯怕海藻</a></li>
                  <li><a href="{{url_for('nemo.landing')}}">Finding nemo</a></li>
                  <li><a href="{{url_for('100_floor.landing')}}">100层的房子</a></li>
                  <li><a href="{{url_for('firetruck.landing')}}">快跑，云梯消防车</a></li>
+             </ul>
+
+          <h3>Resources:</h3>
+             <ul>
+                 <li><a href="{{url_for('resources.guidance')}}">Picture book reading guidance</a></li>
+                 <li><a href="{{url_for('resources.awards')}}">Prestigious awards for picture books</a></li>
+                 <li><a href="{{url_for('resources.authors')}}">Award winning authors</a></li>
+                 <li><a href="{{url_for('resources.illustrators')}}">Award winning illustrators</a></li>           
              </ul>
             </div>
         </div>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+ <html>
+     <head>
+         <title>Welcome to CocoRead!</title>
+         <link rel="stylesheet" type="text/css" href="static/style/web-speech.css" />
+         <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     </head>
+     <body>
+          <h2 style="text-align:center">Award winning authors</h2>
+          </br>
+          </br>
+         <div class="container">
+           <div class="first-div">
+             <div id = 'home'>           
+              <li>Mo Willems</li>
+              </br>
+              <p>Mo Willems is one of the best authors who sees the world from children's eyes.
+                In his books, he speaks with a child's voice as rationalizing the decisions. 
+                Check out one of his best book series, the pigeon series: Don't let the pigeon drive the bus, 
+                Don't let the pigeon stay up late, The pigeon needs a bath, The pigeon has to go to school,
+                The pigeon wants a puppy, etc.
+              </p>
+              <img src="{{ url_for('static', filename='images/mo.png') }}" class='homeImg'>
+              <li>Eric Carle</li>
+              </br>
+              <p>Eric Carle is a creator, author, and illustrator of many classic children's books. His stories 
+                are simple and refine, logical and harmonious. He likes using simple shapes, bright colors,
+                and a lot of white spaces in his illustations. His picture book The very hungry caterpillar has been
+                translated into more than 66 languages and sold more than 50 million copies. Check out this classic 
+                series: The very hungry caterpillar's first summer, The very hungry caterpillar's first spring,
+                The very hungry caterpillar's first winter, The very hungry caterpillar's first fall.</p>
+                <img src="{{ url_for('static', filename='images/ed.png') }}" class='homeImg'>
+              <li>Sydney Smith</li>
+              <p>Sydney Smith is a Canadian author and illustrator. Smith's stories are among the most powerful
+                books about empathy and self-acceptance. His painting style is unqiue, lyrical, color-saturatred,
+                 and empowering. Check out his award winning books, I talk like a river,
+                Town is by the sea, Small in the city</p>
+                <img src="{{ url_for('static', filename='images/ss.png') }}" class='homeImg2'>
+            </div>
+           </div>         
+
+         <div class="second-div">
+           <div style='float:right; margin-right:5%;margin-bottom:10px;'>
+          <h3>Learn more about the authors</h3>
+             <ul>
+                 <li><a href="http://mowillems.com/">Mo Willems</a></li>
+                 <li><a href="https://eric-carle.com/">Eric Carle</a></li>
+                 <li><a href="https://www.sydneydraws.ca/">Sydney Smith</a></li>
+             </ul>
+            </div>
+        </div>
+       </div>
+
+     </body>
+ </html>
