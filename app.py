@@ -49,6 +49,8 @@ def question_conf(page_conf, uname, bookId, path_dir):
 
     return page_conf
 
+bp_r = Blueprint('resources', __name__, static_folder='static',
+               template_folder='templates')
 
 bp_100 = Blueprint('100_floor', __name__, static_folder='static',
                template_folder='templates')
@@ -69,6 +71,19 @@ bp_baba = Blueprint('baba', __name__, static_folder='static',
                template_folder='templates')
 
 page_conf_baba = page_config('page_conf_baba.csv')
+
+@bp_r.route('/awards')
+def awards():
+  return render_template('resources/awards.html')
+@bp_r.route('/guide')
+def guidance():
+  return render_template('resources/guide.html')
+@bp_r.route('/authors')
+def authors():
+  return render_template('resources/authors.html')
+@bp_r.route('/illustrators')
+def illustrators():
+  return render_template('resources/illustrators.html')
 
 @bp_ft.route('/landing')
 @login_required
@@ -331,6 +346,7 @@ app.register_blueprint(bp_100, url_prefix='/100_floor')
 app.register_blueprint(bp_nemo, url_prefix='/nemo')
 app.register_blueprint(bp_baba, url_prefix='/baba')
 app.register_blueprint(bp_ft, url_prefix='/firetruck')
+app.register_blueprint(bp_r, url_prefix='/resources')
 # with app.app_context():
 #     db.create_all()
 
