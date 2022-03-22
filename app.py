@@ -52,6 +52,9 @@ def question_conf(page_conf, uname, bookId, path_dir):
 bp_r = Blueprint('resources', __name__, static_folder='static',
                template_folder='templates')
 
+bp_ic = Blueprint('ic', __name__, static_folder='static',
+               template_folder='templates')
+
 bp_pipi = Blueprint('pipi', __name__, static_folder='static',
                template_folder='templates')
 
@@ -74,6 +77,13 @@ bp_baba = Blueprint('baba', __name__, static_folder='static',
                template_folder='templates')
 
 page_conf_baba = page_config('page_conf_baba.csv')
+@bp_ic.route('/button')
+def button():
+  return render_template('ic/button.html')
+
+@bp_ic.route('/pigeon')
+def pigeon():
+  return render_template('ic/pigeon.html')
 
 @bp_pipi.route('/part1')
 def part1():
@@ -359,6 +369,7 @@ app.register_blueprint(bp_baba, url_prefix='/baba')
 app.register_blueprint(bp_ft, url_prefix='/firetruck')
 app.register_blueprint(bp_r, url_prefix='/resources')
 app.register_blueprint(bp_pipi, url_prefix='/pipi')
+app.register_blueprint(bp_ic, url_prefix='/ic')
 # with app.app_context():
 #     db.create_all()
 
