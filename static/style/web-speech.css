@@ -25,6 +25,12 @@ body{
   height:350px;
   width:450px; 
 }
+.homeImg2 {
+  margin-left:5%;
+  float:left; 
+  height:450px;
+  width:350px; 
+}
 .iconDetails {
   margin-left:20%;
   float:left; 
