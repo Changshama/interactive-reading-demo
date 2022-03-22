@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+ <html>
+     <head>
+         <title>Welcome to CocoRead!</title>
+         <link rel="stylesheet" type="text/css" href="static/style/web-speech.css" />
+         <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     </head>
+     <body>
+          <h2 style="text-align:center">Don’t Push the Button</h2>
+          </br>
+          </br>
+         <div class="container">
+           <div class="first-div">
+             <div id = 'home'>           
+              <li>Bill Cotter</li>
+              <p>Bill Cotter is a renowned children's book author and illustrator. Cotter’s art is clean and simple with monsters and button posed against plenty of white space, keeping the focus tightly on the action.</p>
+              </br>
+              <li>What is the story about?</li>
+              <p>The only rule in Larry's book is that the reader not push the button, but when no one is looking, it may be irresistible.</p>
+              <li>Reading tips</li>
+              <p>Impulse control can be a challenge for many young children. 
+                You can help your kids learn improve their impulsive control by establishing household rules. </p>
+              <p>This book is a fun way to present negative consequences of breaking the rule of not pressing the button. 
+                Read the book with your kids, and help them interpret situations and guide them toward better choices.</p>
+            </div>
+           </div>         
+         <div class="second-div">
+           <div style='margin-left:15%;margin-bottom:10px;'>
+          <h3>Read aloud</h3>
+          <audio id='modelreading' controls="controls" autostart="false" 
+                    src="{{ url_for('static', filename='audio/ic/button.wav') }}" type="audio/wav"></audio>
+          <h3>Fun activities</h3>
+             <ul>
+                 <li><a href="https://www.youtube.com/watch?v=Ks23HDEm830">Learn to draw Larry with Bill Cotter</a></li>
+             </ul>
+          <img src="{{ url_for('static', filename='images/larry.png') }}" class='homeImg2'>
+            </div>
+        </div>
+       </div>
+
+     </body>
+ </html>

@@ -26,7 +26,7 @@
            </div>         
 
          <div class="second-div">
-           <div style='float:right; margin-right:5%;margin-bottom:10px;'>
+           <div style='margin-left:25%;margin-bottom:10px;'>
      {% if 'username' in session %}
          <p>Welcome back {{session['username']}}!</p>
          <form action="{{url_for('index')}}" method="post">
@@ -60,7 +60,12 @@
                  <li><a href="{{url_for('pipi.part1')}}">屁屁侦探-消失的人气甜点（上）</a></li>
                  <li><a href="{{url_for('pipi.part2')}}">屁屁侦探-消失的人气甜点（下）</a></li>
              </ul>
-          <h3>Resources:</h3>
+          <h3>Stories about impulse control:</h3>
+             <ul>
+                 <li><a href="{{url_for('ic.pigeon')}}">Don’t Let the Pigeon Drive the Bus!</a></li>
+                 <li><a href="{{url_for('ic.button')}}">Don’t Push the Button</a></li>
+             </ul>
+          <h3>Other resources:</h3>
              <ul>
                  <li><a href="{{url_for('resources.guidance')}}">Picture book reading guidance</a></li>
                  <li><a href="{{url_for('resources.awards')}}">Prestigious awards for picture books</a></li>
