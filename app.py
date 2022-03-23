@@ -68,6 +68,11 @@ bp_ft = Blueprint('firetruck', __name__, static_folder='static',
 
 page_conf_firetruck = page_config('page_conf_firetruck.csv')
 
+bp_pigeon = Blueprint('pigeon', __name__, static_folder='static',
+               template_folder='templates')
+
+page_conf_pigeon = page_config('page_conf_pigeon.csv')
+
 bp_nemo = Blueprint('nemo', __name__, static_folder='static',
                template_folder='templates')
 
@@ -207,6 +212,60 @@ def innerbook(page):
                         count_max=page_conf_baba[idx]['count_max'],
                         que_id = page_conf_baba[idx]['que_id'])
 
+
+@bp_pigeon.route('/landing')
+@login_required
+def landing():
+    uname = session["username"]
+    question_conf(page_conf_pigeon, uname, 5, 'static/audio/pigeon/')
+
+    return render_template('pigeon/landing.html', 
+                            username =session["username"],
+                            question_name = 'landing-que-eng.wav',
+                            next_page = 1,
+                            que_id = 0,
+                            ans_path = "static/audio/start-reading-eng.wav",
+                            keys=['ok','yes','ready'],
+                            count_max=0)
+
+@bp_pigeon.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  if request.method == "POST":
+    ans_data = request.get_json()
+    user = db.session.query(User).filter_by(username = session["username"]).first()
+    que_answered_before = user.que_answered
+
+    print(ans_data[0]['question'],ans_data[1]['result'])
+
+    # update que answered for the session user
+    if ans_data[0]['question'] > 0 and ans_data[1]['result']:
+      if que_answered_before:
+        user.que_answered += ';'+ str(ans_data[0]['question'])
+      else:
+        user.que_answered += str(ans_data[0]['question'])
+      db.session.commit()
+      print('db updated!')
+    
+    return 'ok'
+
+@bp_pigeon.route('/<int:page>')
+@login_required
+def innerbook(page):
+    idx = page - 1    
+    return render_template('pigeon/innerbook.html', 
+                        username =session["username"],
+                        img_name = page_conf_pigeon[idx]['img_name'],
+                        audio_name = page_conf_pigeon[idx]['audio_name'],
+                        question_name = page_conf_pigeon[idx]['que_audio'],
+                        next_page=page_conf_pigeon[idx]['next_page'],
+                        ans_path = page_conf_pigeon[idx]['ans_audio'],  
+                        keys=page_conf_pigeon[idx]['ans_keys'],
+                        count_max=page_conf_pigeon[idx]['count_max'],
+                        que_id = page_conf_pigeon[idx]['que_id'])
+
+
+
+
 @bp_nemo.route('/landing')
 @login_required
 def landing():
@@ -215,10 +274,10 @@ def landing():
 
     return render_template('nemo/landing.html', 
                             username =session["username"],
-                            question_name = 'landing-question-nemo.wav',
+                            question_name = 'landing-que-eng.wav',
                             next_page = 1,
                             que_id = 0,
-                            ans_path = "static/audio/start-reading-nemo.wav",
+                            ans_path = "static/audio/start-reading-eng.wav",
                             keys=['ok','yes','ready'],
                             count_max=0)
 
@@ -365,6 +424,7 @@ app.add_url_rule('/',
 # app.register_blueprint(bp_nemo_2, url_prefix='/nemo_2')
 app.register_blueprint(bp_100, url_prefix='/100_floor')
 app.register_blueprint(bp_nemo, url_prefix='/nemo')
+app.register_blueprint(bp_pigeon, url_prefix='/pigeon')
 app.register_blueprint(bp_baba, url_prefix='/baba')
 app.register_blueprint(bp_ft, url_prefix='/firetruck')
 app.register_blueprint(bp_r, url_prefix='/resources')
