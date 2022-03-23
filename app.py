@@ -85,6 +85,14 @@ page_conf_baba = page_config('page_conf_baba.csv')
 @bp_ic.route('/button')
 def button():
   return render_template('ic/button.html')
+  
+@bp_ic.route('/dragon')
+def dragon():
+  return render_template('ic/dragon.html')
+
+@bp_ic.route('/danny')
+def danny():
+  return render_template('ic/danny.html')
 
 @bp_ic.route('/pigeon')
 def pigeon():
