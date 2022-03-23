@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+ <html>
+     <head>
+         <title>Welcome to CocoRead!</title>
+         <link rel="stylesheet" type="text/css" href="static/style/web-speech.css" />
+         <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     </head>
+     <body>
+          <h2 style="text-align:center">Train Your Angry Dragon</h2>
+          </br>
+          </br>
+         <div class="container">
+           <div class="first-div">
+             <div id = 'home'>           
+              <li>Steve Herman</li>
+              </br>
+              <p>Steve Herman is a best-selling children's books author. He is passionate about teaching children valuable social and emotional life lessons through his cute, fun, and relatable children's books.
+                  Steve's books have been used by hundreds of thousands of parents, educators, and mental health professionals to help kids deal with Social-Emotional challenges in a fun and effortless way.</p>
+              </br>
+              <li>What is the story about?</li>
+              </br>
+              <p>Written by Steve Herman, Train Your Angry Dragon is a story of a boy named Anthony and his pet dragon, Diggory. 
+                This is a cute children story to teach kids about emotions and anger management. More importantly, the skills from the book
+                are highly practical. </p>
+              <li>Reading tips</li>
+              </br>
+              <p>Prompt your kids to connect with their own experience. Has he or she experienced bully as Diggory did? How did he or she respond? </p>
+             </div>
+           </div>         
+         <div class="second-div">
+           <div style='margin-left:15%;margin-bottom:10px;'>
+          <h3>Read aloud</h3>
+          <audio id='modelreading' controls="controls" autostart="false" 
+                    src="{{ url_for('static', filename='audio/ic/dragon.wav') }}" type="audio/wav"></audio>
+          <h3>Fun activities</h3>
+             <ul>
+                 <li><a href="https://www.mydragonbooks.com/pages/gifts">Free Gift from Steve Herman</a></li>
+             </ul>
+          <img src="{{ url_for('static', filename='images/ic/dragon.png') }}" class='homeImg2'>
+            </div>
+        </div>
+       </div>
+
+     </body>
+ </html>
