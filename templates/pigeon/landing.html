@@ -2,7 +2,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>finding-nemo</title>
+    <title>go-to-school</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/style/web-speech.css">
@@ -11,18 +11,18 @@
   </head>
   <body>
       <main>
-          <h3 class="text-center">Finding Nemo</h3>
+          <h3 class="text-center">The Pigeon Has To Go To School!</h3>
           <div class="container">
             <div class="first-div">
               <div style='margin:0 auto;'>
-                <img src="{{ url_for('static', filename='images/nemo/page0.png') }}" class='imgDetails'>
+                <img src="{{ url_for('static', filename='images/pigeon/p0.png') }}" class='imgHDetails'>
               </div>
             </div>
             <div class="second-div">
               {% block content %}
                 <div style='float:right; margin-right:5%;margin-bottom:10px;'>
                   <button id="copy_button" class="btn btn-primary" 
-                    onclick="location.href='{{ url_for('nemo.innerbook', page=next_page)}}'">Next
+                    onclick="location.href='{{ url_for('pigeon.innerbook', page=next_page)}}'">Next
                   </button>
                 </div>
                 
@@ -72,7 +72,7 @@
           lang_idx = {{6|tojson}}
           dial_idx = {{6|tojson}}
           cnt_max = {{count_max|tojson}}
-          window.url = "{{ url_for('nemo.innerbook', page=next_page)}}"
+          window.url = "{{ url_for('pigeon.innerbook', page=next_page)}}"
       </script>
   </body>
 </html>
