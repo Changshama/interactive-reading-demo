@@ -49,6 +49,12 @@ body{
   height:500px;
   width:400px; 
 }
+.imgLDetails {
+  margin-left:1%;
+  float:left; 
+  height:300px;
+  width:500px; 
+}
 .container{
   width:100%;
   display:flex;
