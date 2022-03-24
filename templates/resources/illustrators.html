@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+ <html>
+     <head>
+         <title>Welcome to CocoRead!</title>
+         <link rel="stylesheet" type="text/css" href="static/style/web-speech.css" />
+         <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+     </head>
+     <body>
+          <h2 style="text-align:center">Award winning illustrators</h2>
+          </br>
+          </br>
+         <div class="container">
+           <div class="first-div">
+             <div id = 'home'>           
+              <li>Suzy Lee</li>
+              </br>
+              <p>Suzy Lee is a Korean illustrator. She is best known for her remarkable achievements in the field of wordless picture books, or silent books.
+              For Suzy Lee, the charm of picture books lies in its power as a medium to convey the simplest truths in a simple yet refined manner, and she is thereby carrying out diverse experiments in the field of wordless picture books to demonstrate this charm. She uses a wide variety of materials from pen, pencil, charcoal, watercolor to acrylic, and different artistic practices including collage and printmaking, depending on the book she is working on.  
+              Suzy Lee's books often explore the pleasures and tensions that lie between reality and fantasy.
+              </p>
+              <div class="container">
+              <img src="{{ url_for('static', filename='images/rs/suzy.png') }}" class='homeImg'>
+              </div>
+              </br>
+              <li>Sharon King-Chai</li>
+              </br>
+              <p>Born in Australia, Sharon King-Chai moved to London in 2003. She is an enormously talented designer and illustrator.
+                Sharon King-Chai's books are beautiful from start to finish, a feast for the eyes of both child and parent.
+              </p>
+                <div class="container">
+                <img src="{{ url_for('static', filename='images/rs/chai.png') }}" class='homeImg2'>
+                </div>
+              </br>
+              <li>Shawn Harris</li>
+              <p>Shawn Harris is an artist and musician who lives and works in Half Moon Bay. He likes use art supplies that the kids reading my books might already have access to, such as colored pencils, cut paper, and ink.
+                His work is a visual feast teeming with life. Shawn Harris's picture book Have You Ever Seen a Flower was the recipient of a Caldecott Honor.
+              </p>
+                <div class="container">
+                <img src="{{ url_for('static', filename='images/rs/sh.png') }}" class='homeImg'>
+                </div>
+            </div>
+           </div>         
+
+         <div class="second-div">
+           <div style='float:right; margin-right:5%;margin-bottom:10px;'>
+          <h3>Learn more about the illustrators</h3>
+             <ul>
+                 <li><a href="http://www.suzyleebooks.com/">Suzy Lee</a></li>
+                 <li><a href="https://www.sharonkingchai.com/">Sharon King-Chai</a></li>
+                 <li><a href="https://www.shawnharris.info/">Shawn Harris</a></li>
+             </ul>
+            </div>
+        </div>
+       </div>
+
+     </body>
+ </html>
