@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>{{ page_title }}</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/style/web-speech.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+      <main>
+          <h3 class="text-center">{{ book_title }}</h3>
+          <div class="container">
+            <div class="first-div">
+              <div style='margin:0 auto;'>
+                <img src="{{ url_for('static', filename='images/'+book_folder+'/'+img_name) }}" class='{{img_format}}'>
+              </div>
+            </div>
+            <div class="second-div">
+              {% block content %}
+                <div style='float:right; margin-right:5%;margin-bottom:10px;'>
+                  <button id="copy_button" class="btn btn-primary" 
+                    onclick="location.href='{{ url_for(book_folder+'.innerbook', page=next_page)}}'">Next
+                  </button>
+                </div>
+                
+                  <div>
+                      <div style="font-size:1.2em;margin-left:60px;">{{username}}, listen to this testing question</div>  
+                  </div>
+                  <p></p>
+                  <div id = 'question_audio' style='margin-left:60px;margin-bottom:10px;'>
+                    <audio id="promptquestion" controls="controls"  autoplay="autoplay"
+                            src="{{ url_for('static', filename='audio/'+question_name) }}" type="audio/wav">
+                    </audio>
+                  </div>
+
+                      <div id="info"></div>
+                      <div class="float-right">
+                        <button id="start_button">
+                          <img id="start_img" src="static/images/mic.gif" alt="Start"></button>
+                      </div>
+                      <div id="results">
+                        <span id="final_span" class="final"></span>
+                        <span id="interim_span" class="interim"></span>
+                        <p>
+                      </div>
+                      <div class="row col-12 p-0 m-0">
+                        <div class="row col-12 col-md-8 col-lg-6 p-0 m-0">
+                            <select id="select_language"></select>
+                            <select id="select_dialect"></select>
+                        </div>
+                        <div class="col-12 col-md-4 col-lg-6 mt-3 mt-md-0 p-0 m-0">
+                          <div class="float-right">
+                            <!-- <button id="copy_button" class="btn btn-primary ">Copy</button> -->
+                          </div>
+                        </div>
+                      </div>
+                                  
+              </div>
+              {% endblock content %}                         
+            </div>
+
+      </main>
+      <script src="static/js/languages.js"></script>
+      <script src={{ url_for('static', filename='js/web-speech-api.js') }}></script>
+      <script>
+          prompt_ans = {{ans_path|tojson}}
+          keywords = {{keys|tojson}}
+          question_id = {{que_id|tojson}}
+          lang_idx = {{6|tojson}}
+          dial_idx = {{6|tojson}}
+          cnt_max = {{count_max|tojson}}
+          window.url = "{{ url_for(book_folder+'.innerbook', page=next_page)}}"
+      </script>
+  </body>
+</html>

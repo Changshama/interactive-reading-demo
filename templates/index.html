@@ -26,7 +26,7 @@
            </div>         
 
          <div class="second-div">
-           <div style='margin-left:25%;margin-bottom:10px;'>
+           <div style='margin-left:20%;margin-bottom:10px;'>
      {% if 'username' in session %}
          <p>Welcome back {{session['username']}}!</p>
          <form action="{{url_for('index')}}" method="post">
@@ -50,11 +50,13 @@
      {% endwith %}
           <h3>Interactive stories:</h3>
              <ul>
+                 <li><a href="{{url_for('green.landing')}}">The Gril With Green Eyes</a></li>
+                 <li><a href="{{url_for('sally.landing')}}">Sally's Phone</a></li>                 
                  <li><a href="{{url_for('pigeon.landing')}}">The Pigeon Has To Go To School!</a></li>
                  <li><a href="{{url_for('baba.landing')}}">巴巴布拉伯怕海藻</a></li>
-                 <li><a href="{{url_for('nemo.landing')}}">Finding nemo</a></li>
-                 <li><a href="{{url_for('100_floor.landing')}}">100层的房子</a></li>
+                 <li><a href="{{url_for('100.landing')}}">100层的房子</a></li>
                  <li><a href="{{url_for('firetruck.landing')}}">快跑，云梯消防车</a></li>
+                 <li><a href="{{url_for('nemo.landing')}}">Finding nemo</a></li>                 
              </ul>
           <h3>Read for fun:</h3>
              <ul>
