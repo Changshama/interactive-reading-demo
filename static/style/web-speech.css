@@ -49,6 +49,12 @@ body{
   height:500px;
   width:400px; 
 }
+.imgSDetails {
+  margin-left:5%;
+  float:left; 
+  height:550px;
+  width:650px; 
+}
 .imgLDetails {
   margin-left:1%;
   float:left; 
