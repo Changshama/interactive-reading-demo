@@ -1,6 +1,9 @@
-body{
+body, html{
     font-family: 'Georgia', serif;
     color:#3E4349;
+    width: 100%;
+    height: 100%;
+    margin: 0;
 }
 #nav {
     position: absolute;
@@ -50,10 +53,9 @@ body{
   width:400px; 
 }
 .imgSDetails {
-  margin-left:5%;
   float:left; 
-  height:550px;
-  width:650px; 
+  height:750px;
+  width:950px;
 }
 .imgLDetails {
   margin-left:1%;
@@ -63,23 +65,37 @@ body{
 }
 .container{
   width:100%;
+  height:100%;
   display:flex;
 }
 .first-div,.second-div{
   width:50%;
   border: 1px solid rgba(255,255,255,.5);
 }
-.container2 {
-  width:100%;
-  height:auto;
-  padding:1%;
+.left_div {
+  width:5%;
+  background-color:#009900;
+  float: left;
+  margin:0 auto;
+  text-align:center;
 }
-.containeraudiobook {
-  margin-left:20%;
-  width:100%;
-  height:auto;
-  padding:1%;
-  clear:both;
+.middle_div {
+  width:90%;
+  background-color:#009900;
+  float: left;
+}
+.right_div {
+  width:5%;
+  background-color:#009900;
+  float: right;
+  margin:0 auto;
+  text-align:center;
+}
+.top_div {
+  width: 100%;
+  height: 200px;
+  border-collapse: collapse;
+  background-color: #4da6ff;
 }
 .final {
   color: black;
