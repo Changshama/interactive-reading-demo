@@ -27,11 +27,11 @@ class Question(db.Model):
 bp_green = Blueprint('green', __name__, static_folder='static',
                template_folder='templates')
 
-page_conf_worm = page_config('page_conf_worm.csv')
+page_conf_green = page_config('page_conf_worm.csv')
 
 bp_sally = Blueprint('sally', __name__, static_folder='static',
                template_folder='templates')
-
+page_conf_sally = page_config('page_conf_worm.csv')
 
 bp_100 = Blueprint('100', __name__, static_folder='static',
                template_folder='templates')
@@ -131,7 +131,7 @@ def innerbook(page):
 @bp_green.route('/landing')
 @login_required
 def landing(): 
-  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_worm, 7, session, 'The Gril With Green Eyes', 'green', 'landing-que-eng.wav', "start-reading-eng.wav")
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_green, 7, session, 'The Gril With Green Eyes', 'green', 'landing-que-eng.wav', "start-reading-eng.wav")
 
 @bp_green.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -140,12 +140,12 @@ def process_answer():
 @bp_green.route('/<int:page>')
 @login_required
 def innerbook(page):
-  return inner(page, page_conf_worm, 'imgSDetails', 'The Gril With Green Eyes', 'green', session)
+  return inner(page, page_conf_green, 'imgSDetails', 'The Gril With Green Eyes', 'green', session)
 
 @bp_sally.route('/landing')
 @login_required
 def landing(): 
-  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_worm, 6, session, 'Sally\'s Phone', 'sally', 'landing-que-eng.wav', "start-reading-eng.wav")
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_sally, 6, session, 'Sally\'s Phone', 'sally', 'landing-que-eng.wav', "start-reading-eng.wav")
 
 @bp_sally.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -154,7 +154,7 @@ def process_answer():
 @bp_sally.route('/<int:page>')
 @login_required
 def innerbook(page):
-  return inner(page, page_conf_worm, 'imgSDetails', 'Sally\'s Phone', 'sally', session)
+  return inner(page, page_conf_sally, 'imgSDetails', 'Sally\'s Phone', 'sally', session)
 
 
 class Main(views.MethodView):
