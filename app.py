@@ -131,7 +131,7 @@ def innerbook(page):
 @bp_green.route('/landing')
 @login_required
 def landing(): 
-  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_worm, 7, session, 'The Gril With Green Eyes', 'green', 'landing-question.wav', "start-reading.wav")
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_worm, 7, session, 'The Gril With Green Eyes', 'green', 'landing-que-eng.wav', "start-reading-eng.wav")
 
 @bp_green.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -145,7 +145,7 @@ def innerbook(page):
 @bp_sally.route('/landing')
 @login_required
 def landing(): 
-  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_worm, 6, session, 'Sally\'s Phone', 'sally', 'landing-question.wav', "start-reading.wav")
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_worm, 6, session, 'Sally\'s Phone', 'sally', 'landing-que-eng.wav', "start-reading-eng.wav")
 
 @bp_sally.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
