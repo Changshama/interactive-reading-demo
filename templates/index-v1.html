@@ -14,21 +14,15 @@
            <div class="first-div">
              <div id = 'home'>           
               <h3>How does CoCoRead work?</h3>
-              <h4>For each book, CoCoRead provides a set of pedagogical questions designed for readers to 
-                reflect on the content during reading. The AI bot CoCo picks questions for the reader, 
+              <h4>For each book, CoCoRead provides a set of pedagogical questions designed for children to 
+                reflect on the content. The AI bot CoCo picks questions for the reader, 
                 the reader responds to those questions, and CoCo analyzes the answers and 
-                adapts the future question selection to the reader's cognitive and language level. Below is 
-                an example of the question types organized by difficulty levels.</h4>
-                </br>
-                <img src="{{ url_for('static', filename='images/question_matrix.png') }}" class='homeImg'>
+                adapts the future question selection to the reader's cognitive and language level. </h4>
               <h3>Why does CoCoRead help reading?</h3>
-              <h4>CoCoRead leverages conversational reading, combining reading, listening and speaking all together.
-                It is a research proven method of effective language learning pedagogy. 
-                First, by answering the questions in the conversations, readers have a better reading comprehension. 
-                Second, by communicating with the AI bot, readers learn how to use the vocabularies and phrasal verbs from reading materials. 
-                Therefore, CoCoRead promotes both linguistic compentence and communicative compentence of the readers.</h4>
+              <h4>Conversational reading is a research proven method of effective learning. It promotes critical
+                thinking and language skills of young children. It also leads to higher engagement and better comprehension.</h4>
             </div>
-              
+              <img src="{{ url_for('static', filename='images/question_matrix.png') }}" class='homeImg'>
            </div>         
 
          <div class="second-div">
@@ -59,14 +53,35 @@
                  <li><a href="{{url_for('green.landing')}}">The Gril With Green Eyes</a></li>
                  <li><a href="{{url_for('sally.landing')}}">Sally's Phone</a></li>                 
                  <li><a href="{{url_for('pigeon.landing')}}">The Pigeon Has To Go To School!</a></li>
+                 <li><a href="{{url_for('baba.landing')}}">巴巴布拉伯怕海藻</a></li>
+                 <li><a href="{{url_for('100.landing')}}">100层的房子</a></li>
+                 <li><a href="{{url_for('firetruck.landing')}}">快跑，云梯消防车</a></li>
                  <li><a href="{{url_for('nemo.landing')}}">Finding nemo</a></li>                 
              </ul>
-          <h3>Read-aloud stories</h3>
+          <h3>Read for fun:</h3>
+             <ul>
+                 <li><a href="{{url_for('pipi.part1')}}">屁屁侦探-消失的人气甜点（上）</a></li>
+                 <li><a href="{{url_for('pipi.part2')}}">屁屁侦探-消失的人气甜点（下）</a></li>
+             </ul>
+          <h3>Stories about impulse control:</h3>
              <ul>
                  <li><a href="{{url_for('ic.button')}}">Don’t Push the Button</a></li>
+             </ul>
+          <h3>Stories about responsibilities:</h3>
+             <ul>
                  <li><a href="{{url_for('ic.pigeon')}}">Don’t Let the Pigeon Drive the Bus!</a></li>
+             </ul>
+          <h3>Stories about emotions:</h3>
+             <ul>
                  <li><a href="{{url_for('ic.dragon')}}">Train Your Angry Dragon</a></li>
                  <li><a href="{{url_for('ic.danny')}}">What Should Danny Do?</a></li>
+             </ul>
+          <h3>Other resources:</h3>
+             <ul>
+                 <li><a href="{{url_for('resources.guidance')}}">Picture book reading guidance</a></li>
+                 <li><a href="{{url_for('resources.awards')}}">Prestigious awards for picture books</a></li>
+                 <li><a href="{{url_for('resources.authors')}}">Award winning authors</a></li>
+                 <li><a href="{{url_for('resources.illustrators')}}">Award winning illustrators</a></li>           
              </ul>
             </div>
         </div>
