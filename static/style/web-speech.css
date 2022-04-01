@@ -41,20 +41,18 @@ body, html{
 } 
 .imgDetails {
   margin-left:15%;
-  float:left; 
   height:650px;
   width:450px; 
 } 
 .imgHDetails {
   margin-left:20%;
-  float:left; 
-  height:600px;
-  width:500px; 
+  height:750px;
+  width:600px; 
 }
 .imgSDetails {
   float:left; 
-  height:750px;
-  width:950px;
+  height:800px;
+  width:1050px;
 }
 .imgLDetails {
   margin-left:1%;
