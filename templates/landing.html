@@ -14,13 +14,13 @@
           <h3 class="text-center">{{ book_title }}</h3>
           </br>
 
-          <div class="container">
-            <div class="first-div">
+          <div class="wrapper">
+            <div class="boxMain">
               <div style='margin:0 auto;'>
                 <img src="{{ url_for('static', filename='images/'+book_folder+'/'+img_name) }}" class='{{img_format}}'>
               </div>
             </div>
-            <div class="second-div">
+            <div class="side">
               {% block content %}
                 <div style='float:right; margin-right:5%;margin-bottom:10px;'>
                   <button id="copy_button" class="btn btn-primary" 

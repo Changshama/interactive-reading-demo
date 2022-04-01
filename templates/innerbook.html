@@ -19,7 +19,7 @@
                   onclick="location.href='{{ url_for('index')}}'">Home
                 </button>
               </div>
-              <img src="{{ url_for('static', filename='images/'+book_folder+'/'+img_name) }}" class='{{img_format}}''>
+              <img src="https://mltest2823519881.blob.core.windows.net/azureml/images/{{book_folder}}/{{img_name}}" class='{{img_format}}''>
             </div>
 
             <div class="side">
@@ -34,14 +34,14 @@
                       <div style="font-size:1.2em;margin-left:10px;">{{username}}, listen to book</div>                              
                       <div style='margin-left:10px;margin-bottom:10px;'>
                         <audio id='modelreading' controls="controls" autoplay="autoplay" 
-                        src="{{ url_for('static', filename='audio/'+book_folder+'/'+audio_name) }}" type="audio/wav">
+                        src="https://mltest2823519881.blob.core.windows.net/azureml/audio/{{book_folder}}/{{audio_name}}" type="audio/wav">
                         </audio>
                       </div>
                       <p></p>
                       <div style="font-size:1.2em;margin-left:10px;">{{username}}, listen to questions</div>  
                       <div id = 'question_audio' style='margin-left:10px;margin-bottom:10px;'>
                         <audio id="promptquestion" controls="controls"  autostart="false"
-                                src="{{ url_for('static', filename='audio/'+book_folder+'/'+question_name) }}" type="audio/wav">
+                                src="https://mltest2823519881.blob.core.windows.net/azureml/audio/{{book_folder}}/{{question_name}}" type="audio/wav">
                         </audio>
                       </div>
                       <script>
@@ -78,7 +78,7 @@
                       <div style="font-size:1.2em;margin-left:10px;">{{username}}, listen to book</div>
                       <div style='margin-left:10px;margin-bottom:10px;'>
                         <audio id='modelreading-2' controls="controls" autoplay="autoplay" 
-                        src="{{ url_for('static', filename='audio/'+book_folder+'/'+audio_name) }}" type="audio/wav">
+                        src="https://mltest2823519881.blob.core.windows.net/azureml/audio/{{book_folder}}/{{audio_name}}" type="audio/wav"> 
                         </audio>
                       </div>                
                       <script>
