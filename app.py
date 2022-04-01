@@ -29,6 +29,11 @@ bp_green = Blueprint('green', __name__, static_folder='static',
 
 page_conf_green = page_config('page_conf_worm.csv')
 
+bp_bushop = Blueprint('bushop', __name__, static_folder='static',
+               template_folder='templates')
+
+page_conf_bushop = page_config('page_conf_bushop.csv')
+
 bp_sally = Blueprint('sally', __name__, static_folder='static',
                template_folder='templates')
 page_conf_sally = page_config('page_conf_worm.csv')
@@ -58,33 +63,47 @@ bp_baba = Blueprint('baba', __name__, static_folder='static',
 
 page_conf_baba = page_config('page_conf_baba.csv')
 
-@bp_ft.route('/landing')
-@login_required
-def landing():
-  return land(db, User, Question, 'p0.png', 'imgHDetails', page_conf_firetruck, 4, session, '快跑，云梯消防车！', 'firetruck', 'landing-question.wav', "start-reading.wav")
+# @bp_ft.route('/landing')
+# @login_required
+# def landing():
+#   return land(db, User, Question, 'p0.png', 'imgHDetails', page_conf_firetruck, 4, session, '快跑，云梯消防车！', 'firetruck', 'landing-question.wav', "start-reading.wav")
 
-@bp_ft.route('/process_answer', methods=['POST', 'GET'])
-def process_answer():
-  return process(db, User, session)
+# @bp_ft.route('/process_answer', methods=['POST', 'GET'])
+# def process_answer():
+#   return process(db, User, session)
 
-@bp_ft.route('/<int:page>')
-@login_required
-def innerbook(page):
-  return inner(page, page_conf_firetruck, 'imgHDetails', '快跑，云梯消防车！', 'firetruck', session)
+# @bp_ft.route('/<int:page>')
+# @login_required
+# def innerbook(page):
+#   return inner(page, page_conf_firetruck, 'imgHDetails', '快跑，云梯消防车！', 'firetruck', session)
 
-@bp_baba.route('/landing')
-@login_required
-def landing():
-  return land(db, User, Question, 'barbabravo.gif', 'imgHDetails', page_conf_baba, 3, session, '巴巴布拉伯怕海藻', 'baba', 'landing-question.wav', "landing-baba.wav")
+# @bp_baba.route('/landing')
+# @login_required
+# def landing():
+#   return land(db, User, Question, 'barbabravo.gif', 'imgHDetails', page_conf_baba, 3, session, '巴巴布拉伯怕海藻', 'baba', 'landing-question.wav', "landing-baba.wav")
 
-@bp_baba.route('/process_answer', methods=['POST', 'GET'])
-def process_answer():
-  return process(db, User, session)
+# @bp_baba.route('/process_answer', methods=['POST', 'GET'])
+# def process_answer():
+#   return process(db, User, session)
 
-@bp_baba.route('/<int:page>')
-@login_required
-def innerbook(page):
-    return inner(page, page_conf_baba, 'imgHDetails', '巴巴布拉伯怕海藻', 'baba', session)
+# @bp_baba.route('/<int:page>')
+# @login_required
+# def innerbook(page):
+#     return inner(page, page_conf_baba, 'imgHDetails', '巴巴布拉伯怕海藻', 'baba', session)
+
+# @bp_100.route('/landing')
+# @login_required
+# def landing(): 
+#   return land(db, User, Question, 'page0.png', 'imgDetails', page_conf, 1, session, '100层的房子', '100', 'landing-question.wav', "start-reading.wav")
+
+# @bp_100.route('/process_answer', methods=['POST', 'GET'])
+# def process_answer():
+#   return process(db, User, session)
+
+# @bp_100.route('/<int:page>')
+# @login_required
+# def innerbook(page):
+#   return inner(page, page_conf, 'imgDetails', '100层的房子', '100', session)
 
 @bp_pigeon.route('/landing')
 @login_required
@@ -114,19 +133,6 @@ def process_answer():
 def innerbook(page):
   return inner(page, page_conf_nemo, 'imgHDetails', 'Finding Nemo', 'nemo', session)
 
-@bp_100.route('/landing')
-@login_required
-def landing(): 
-  return land(db, User, Question, 'page0.png', 'imgDetails', page_conf, 1, session, '100层的房子', '100', 'landing-question.wav', "start-reading.wav")
-
-@bp_100.route('/process_answer', methods=['POST', 'GET'])
-def process_answer():
-  return process(db, User, session)
-
-@bp_100.route('/<int:page>')
-@login_required
-def innerbook(page):
-  return inner(page, page_conf, 'imgDetails', '100层的房子', '100', session)
 
 @bp_green.route('/landing')
 @login_required
@@ -156,6 +162,20 @@ def process_answer():
 def innerbook(page):
   return inner(page, page_conf_sally, 'imgSDetails', 'Sally\'s Phone', 'sally', session)
 
+@bp_bushop.route('/landing')
+@login_required
+def landing(): 
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_bushop, 8, session, 'The Magic School Bus Hops Home', 'bushop', 'landing-que-eng.wav', "start-reading-eng.wav")
+
+@bp_bushop.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  return process(db, User, session)
+
+@bp_bushop.route('/<int:page>')
+@login_required
+def innerbook(page):
+  return inner(page, page_conf_bushop, 'imgLDetails', 'The Magic School Bus Hops Home', 'bushop', session)
+
 
 class Main(views.MethodView):
     def get(self):
@@ -184,15 +204,18 @@ app.add_url_rule('/',
                  view_func=Main.as_view('index'),
                  methods=["GET", "POST"])
 
+# app.register_blueprint(bp_100, url_prefix='/100_floor')
+# app.register_blueprint(bp_baba, url_prefix='/baba')
+# app.register_blueprint(bp_ft, url_prefix='/firetruck')
+# app.register_blueprint(bp_r, url_prefix='/resources')
+# app.register_blueprint(bp_pipi, url_prefix='/pipi')
+
 app.register_blueprint(bp_green, url_prefix='/green')
 app.register_blueprint(bp_sally, url_prefix='/sally')
-app.register_blueprint(bp_100, url_prefix='/100_floor')
+app.register_blueprint(bp_bushop, url_prefix='/bushop')
 app.register_blueprint(bp_nemo, url_prefix='/nemo')
 app.register_blueprint(bp_pigeon, url_prefix='/pigeon')
-app.register_blueprint(bp_baba, url_prefix='/baba')
-app.register_blueprint(bp_ft, url_prefix='/firetruck')
-app.register_blueprint(bp_r, url_prefix='/resources')
-app.register_blueprint(bp_pipi, url_prefix='/pipi')
+
 app.register_blueprint(bp_ic, url_prefix='/ic')
 # with app.app_context():
 #     db.create_all()

@@ -53,7 +53,7 @@ def question_conf(db, User, Question, page_conf, uname, bookId, path_dir):
 
 def landing(db, User, Question, img_name, img_format, page_conf, bookid, session, book_title, book_folder, que_name, ans_name):
     uname = session["username"]
-    question_conf(db, User, Question, page_conf, uname, bookid, 'static/audio/'+book_folder+'/')
+    question_conf(db, User, Question, page_conf, uname, bookid, 'https://mltest2823519881.blob.core.windows.net/azureml/audio/'+book_folder+'/')
 
     return render_template( 'landing.html', 
                             username = uname,
