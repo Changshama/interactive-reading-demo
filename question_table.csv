@@ -36,3 +36,8 @@ id,book_id,page_id,level,audio,ans_audio,count_max,ans_key
 35,7,7,2,que-p7.wav,ans-p7.wav,1,sketch;book
 36,7,10,2,que-p10.wav,ans-p10.wav,1,ten;10
 37,7,13,2,que-p13.wav,ans-p13.wav,2,no;not;stranger;risk;wrong
+38,8,2,2,que-p2.wav,ans-p2.wav,1,flies
+39,8,4,2,que-p4.wav,ans-p4.wav,1,no
+40,8,7,2,que-p7.wav,ans-p7.wav,1,quiet;water
+41,8,11,2,que-p11.wav,ans-p11.wav,1,no;hide;water
+42,8,14,2,que-p14.wav,ans-p14.wav,2,toy;bella;bullfrog;sound
