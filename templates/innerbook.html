@@ -11,35 +11,35 @@
   <body>
           <h3 class="text-center">{{ book_title }}</h3>
           </br>
-          <div class="container">
-              <div class="left-div">
-                  <button id="copy_button" class="btn btn-primary" 
-                    onclick="location.href='{{ url_for('index')}}'">Home
-                  </button>
+          <div class="wrapper">
+
+            <div class="boxMain">
+              <div style='margin-left:5%;margin-bottom:5px;'>
+                <button id="copy_button" class="btn btn-primary" 
+                  onclick="location.href='{{ url_for('index')}}'">Home
+                </button>
               </div>
-              <div class="middle-div">
-                  <img src="{{ url_for('static', filename='images/'+book_folder+'/'+img_name) }}" class='{{img_format}}''>
-              </div>
-              <div class="right-div">
+              <img src="{{ url_for('static', filename='images/'+book_folder+'/'+img_name) }}" class='{{img_format}}''>
+            </div>
+
+            <div class="side">
+              <div style='margin-right:5%;margin-bottom:5px;'>
                   <button id="copy_button" class="btn btn-primary" 
                     onclick="location.href='{{ url_for(book_folder+'.innerbook', page=next_page)}}'">Next
                   </button>
-              </div>
-          </div>
-          </br>
-          {% block content %}            
-            {% if 'wav' in question_name %}  
-              <div class="container">
-                  <div class="first-div">
-                      <div style="font-size:1.2em;margin-left:30px;">{{username}}, listen to book</div>                              
-                      <div style='margin-left:30px;margin-bottom:10px;'>
+              </div>              
+                {% block content %}            
+                  {% if 'wav' in question_name %}  
+
+                      <div style="font-size:1.2em;margin-left:10px;">{{username}}, listen to book</div>                              
+                      <div style='margin-left:10px;margin-bottom:10px;'>
                         <audio id='modelreading' controls="controls" autoplay="autoplay" 
                         src="{{ url_for('static', filename='audio/'+book_folder+'/'+audio_name) }}" type="audio/wav">
                         </audio>
                       </div>
                       <p></p>
-                      <div style="font-size:1.2em;margin-left:30px;">{{username}}, listen to questions</div>  
-                      <div id = 'question_audio' style='margin-left:30px;margin-bottom:10px;'>
+                      <div style="font-size:1.2em;margin-left:10px;">{{username}}, listen to questions</div>  
+                      <div id = 'question_audio' style='margin-left:10px;margin-bottom:10px;'>
                         <audio id="promptquestion" controls="controls"  autostart="false"
                                 src="{{ url_for('static', filename='audio/'+book_folder+'/'+question_name) }}" type="audio/wav">
                         </audio>
@@ -51,8 +51,7 @@
                           audio_link.play();
                         };
                       </script>
-                  </div>
-                  <div class="second-div">
+
                       <div id="info"></div>
                       <div class="float-right">
                         <button id="start_button">
@@ -74,32 +73,29 @@
                           </div>
                         </div>
                       </div>
-                  </div>
-              </div>   
-                              
-            {% else %}
-            <div class="container">
-                <div style="font-size:1.2em;margin-left:30px;">{{username}}, listen to book</div>
-                <div style='margin-left:30px;margin-bottom:10px;'>
-                  <audio id='modelreading-2' controls="controls" autoplay="autoplay" 
-                  src="{{ url_for('static', filename='audio/'+book_folder+'/'+audio_name) }}" type="audio/wav">
-                  </audio>
-                </div>                
-                <script>
-                  audio_reading = document.getElementById('modelreading-2');
-                  flip_audio = new Audio('static/audio/chime.wav')
-                  audio_reading.onended = function(){                                                
-                    flip_audio.play();
-                  };                    
-                  function redirectHandler() {
-                    window.location.href = "{{ url_for(book_folder+'.innerbook', page=next_page)}}";
-                  }
-                  flip_audio.addEventListener('ended', redirectHandler, false);
-                </script>
+                                    
+                  {% else %}
+                      <div style="font-size:1.2em;margin-left:10px;">{{username}}, listen to book</div>
+                      <div style='margin-left:10px;margin-bottom:10px;'>
+                        <audio id='modelreading-2' controls="controls" autoplay="autoplay" 
+                        src="{{ url_for('static', filename='audio/'+book_folder+'/'+audio_name) }}" type="audio/wav">
+                        </audio>
+                      </div>                
+                      <script>
+                        audio_reading = document.getElementById('modelreading-2');
+                        flip_audio = new Audio('static/audio/chime.wav')
+                        audio_reading.onended = function(){                                                
+                          flip_audio.play();
+                        };                    
+                        function redirectHandler() {
+                          window.location.href = "{{ url_for(book_folder+'.innerbook', page=next_page)}}";
+                        }
+                        flip_audio.addEventListener('ended', redirectHandler, false);
+                      </script>
+                  {% endif %}
+                {% endblock content %}
             </div>
-            {% endif %}
-          {% endblock content %}
-
+          </div>
 
       <script src="static/js/languages.js"></script>
       <script src={{ url_for('static', filename='js/web-speech-api.js') }}></script>
