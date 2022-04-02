@@ -43,6 +43,14 @@ def danny():
 def pigeon():
   return render_template('ic/pigeon.html')
 
+@bp_ic.route('/level')
+def level():
+  return render_template('ic/level.html')
+
+@bp_ic.route('/book')
+def book():
+  return render_template('ic/book.html')
+
 @bp_pipi.route('/part1')
 def part1():
   return render_template('pipi/part1.html')
