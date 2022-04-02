@@ -33,6 +33,18 @@ body, html{
   height:450px;
   width:350px; 
 }
+.homeImg3 {
+  margin-left:5%;
+  float:left; 
+  height:700px;
+  width:550px; 
+}
+.homeImg4 {
+  margin-left:5%;
+  float:left; 
+  height:600px;
+  width:700px; 
+}
 .iconDetails {
   margin-left:20%;
   float:left; 
