@@ -23,6 +23,7 @@ def page_config(fname):
   f.close()
   return page_conf
 
+#need to rework on ranking function
 def ranking(db, User, uname):
   #questions answered by this user
   this_user = db.session.query(User).filter_by(username = uname).first()
@@ -36,6 +37,25 @@ def ranking(db, User, uname):
     rank = 2
   
   return rank,que_count
+
+def summary(db, User, uname):
+  #questions answered by this user
+  this_user = db.session.query(User).filter_by(username = uname).first()
+  que_cnt = len(this_user.que_answered)
+  book_cnt = len(this_user.book_read)
+
+  #questions answered by this user's group
+  max_question = db.session.query(func.max(User.que_answered)).filter_by(group = this_user.group).scalar()
+  max_book = db.session.query(func.max(User.book_read)).filter_by(group = this_user.group).scalar()
+
+  que_rank = 1
+  book_rank = 1
+  if que_cnt < len(max_question):
+    que_rank = 2
+  if book_rank < len(max_book):
+    book_rank = 2
+
+  return que_rank,que_cnt,book_rank,book_cnt
 
 def question_conf(db, User, Question, page_conf, uname, bookId, path_dir):
     # filter out questions answered (correctly) by this user
@@ -84,15 +104,6 @@ def landing(db, User, Question, img_name, img_format, page_conf, bookid, session
                             keys=['ok','yes','ready','好了','准备'],
                             count_max=0)
 
-def ending(db, User, Question, bookid, session, book_title, book_folder):
-    uname = session["username"]
-    rank, no_question = ranking(db, User, uname)
-    return render_template( 'ending.html', 
-                            username = uname,
-                            page_title = book_folder,
-                            book_title = book_title,
-                            rank = rank,
-                            questions = no_question)
 
 def process_answer(db, User, session):
   if request.method == "POST":
@@ -113,14 +124,36 @@ def process_answer(db, User, session):
     
     return 'ok'
 
-def innerbook(page, page_conf, img_format, book_title, book_folder, session):
-    idx = page - 1    
-    return render_template('innerbook.html', 
-                        username =session["username"],
+def profile(db, User, session):
+  uname = session["username"]
+  que_rank,que_cnt,book_rank,book_cnt = summary(db, User, uname)
+  return render_template( 'profile.html', 
+                            username = uname,
+                            que_rank = que_rank,
+                            book_rank = book_rank,
+                            books = book_cnt,
+                            questions = que_cnt,)  
+
+# def ending(db, User, Question, bookid, session, book_title, book_folder):
+#     uname = session["username"]
+#     rank, no_question = ranking(db, User, uname)
+#     return render_template( 'ending.html', 
+#                             username = uname,
+#                             page_title = book_folder,
+#                             book_title = book_title,
+#                             rank = rank,
+#                             questions = no_question)
+def innerbook(db, User, page, page_conf, img_format, book_title, book_folder, session):
+    idx = page - 1   
+    uname = session["username"]
+    if idx < len(page_conf) - 1:
+      return render_template('innerbook.html', 
+                        username = uname,
                         img_name = page_conf[idx]['img_name'],
                         audio_name = page_conf[idx]['audio_name'],
                         question_name = page_conf[idx]['que_audio'],
-                        next_page=page_conf[idx]['next_page'],
+                        next_page= idx+2,
+                        # page_conf[idx]['next_page'],
                         ans_path = page_conf[idx]['ans_audio'],  
                         keys=page_conf[idx]['ans_keys'],
                         img_format = img_format,
@@ -129,3 +162,12 @@ def innerbook(page, page_conf, img_format, book_title, book_folder, session):
                         book_folder = book_folder,
                         count_max=page_conf[idx]['count_max'],
                         que_id = page_conf[idx]['que_id'])
+    else:         
+      rank, no_question = ranking(db, User, uname)
+      return render_template( 'ending.html', 
+                            username = uname,
+                            page_title = book_folder,
+                            book_title = book_title,
+                            rank = rank,
+                            questions = no_question)
+

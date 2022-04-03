@@ -7,6 +7,7 @@ from utils import page_config, question_conf, login_required
 from utils import landing as land
 from utils import process_answer as process
 from utils import innerbook as inner
+from utils import profile as user_profile
 from views import bp_r, bp_ic, bp_pipi
 from flask_sqlalchemy import SQLAlchemy
 import csv
@@ -117,12 +118,12 @@ def process_answer():
 @bp_pigeon.route('/<int:page>')
 @login_required
 def innerbook(page):
-  return inner(page, page_conf_pigeon, 'imgLDetails', 'The Pigeon Has to Go to School', 'pigeon', session)
+  return inner(db, User, page, page_conf_pigeon, 'imgLDetails', 'The Pigeon Has to Go to School', 'pigeon', session)
 
 @bp_nemo.route('/landing')
 @login_required
 def landing():
-    return land(db, User, Question, 'page0.png', 'imgHDetails', page_conf_nemo, 2, session, 'Finding Nemo', 'nemo', 'landing-que-eng.wav', "start-reading-eng.wav")
+    return land(db, User, db, User, Question, 'page0.png', 'imgHDetails', page_conf_nemo, 2, session, 'Finding Nemo', 'nemo', 'landing-que-eng.wav', "start-reading-eng.wav")
 
 @bp_nemo.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -131,7 +132,7 @@ def process_answer():
 @bp_nemo.route('/<int:page>')
 @login_required
 def innerbook(page):
-  return inner(page, page_conf_nemo, 'imgHDetails', 'Finding Nemo', 'nemo', session)
+  return inner(db, User, page, page_conf_nemo, 'imgHDetails', 'Finding Nemo', 'nemo', session)
 
 
 @bp_green.route('/landing')
@@ -146,7 +147,7 @@ def process_answer():
 @bp_green.route('/<int:page>')
 @login_required
 def innerbook(page):
-  return inner(page, page_conf_green, 'imgSDetails', 'The Gril With Green Eyes', 'green', session)
+  return inner(db, User, page, page_conf_green, 'imgSDetails', 'The Gril With Green Eyes', 'green', session)
 
 @bp_sally.route('/landing')
 @login_required
@@ -160,7 +161,7 @@ def process_answer():
 @bp_sally.route('/<int:page>')
 @login_required
 def innerbook(page):
-  return inner(page, page_conf_sally, 'imgSDetails', 'Sally\'s Phone', 'sally', session)
+  return inner(db, User, page, page_conf_sally, 'imgSDetails', 'Sally\'s Phone', 'sally', session)
 
 @bp_bushop.route('/landing')
 @login_required
@@ -174,7 +175,7 @@ def process_answer():
 @bp_bushop.route('/<int:page>')
 @login_required
 def innerbook(page):
-  return inner(page, page_conf_bushop, 'imgLDetails', 'The Magic School Bus Hops Home', 'bushop', session)
+  return inner(db, User, page, page_conf_bushop, 'imgLDetails', 'The Magic School Bus Hops Home', 'bushop', session)
 
 
 class Main(views.MethodView):
@@ -203,7 +204,10 @@ class Main(views.MethodView):
 app.add_url_rule('/',
                  view_func=Main.as_view('index'),
                  methods=["GET", "POST"])
-
+                 
+@app.route('/profile', methods=['POST', 'GET'])
+def profile():
+  return user_profile(db, User, session);
 # app.register_blueprint(bp_100, url_prefix='/100_floor')
 # app.register_blueprint(bp_baba, url_prefix='/baba')
 # app.register_blueprint(bp_ft, url_prefix='/firetruck')

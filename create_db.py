@@ -41,6 +41,7 @@ user_table = Table('user', metadata,
     Column('pwd', String(20)),
     Column('age', Integer),
     Column('level', Integer),
+    Column('group', Integer),   
     Column('que_answered', String(32)),
     Column('book_read', String(20)),
 )
@@ -53,8 +54,8 @@ with open('user_table.csv', 'r', encoding="utf-8") as csvfile:
     engine.execute(
         insert_query,
         [{"username": row[1], "pwd": row[2],
-          "age": row[3], "level": row[4], 
-          "que_answered": row[5], "book_read": row[6]} 
+          "age": row[3], "level": row[4], "group": row[5], 
+          "que_answered": row[6], "book_read": row[7]} 
             for row in csv_reader]
     )
 
