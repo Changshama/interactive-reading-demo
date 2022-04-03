@@ -1,6 +1,7 @@
-id,username,pwd,age,level,que_answered,book_read
-1,Jimmy,lovecoco,4,2,1;2;4,1
-2,Peter,lovecocotoo,3,1,,
-3,Grace,lovecoco,3,1,,
-4,Littlezhi,lovecoco,3,1,,
-5,Zoey,lovecoco,8,2,,
+id,username,pwd,age,level,group,que_answered,book_read
+1,Jimmy,lovecoco,4,2,0,1;2;4,1
+2,Peter,lovecoco,3,1,0,,
+3,Grace,lovecoco,3,1,0,,
+4,Littlezhi,lovecoco,3,1,0,,
+5,Zoey,lovecoco,8,2,1,,
+6,Test,testing,8,2,1,,6
