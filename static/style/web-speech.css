@@ -51,6 +51,12 @@ body, html{
   height:250px;
   width:250px; 
 } 
+.iconHDetails {
+  margin-left:20%;
+  float:left; 
+  height:400px;
+  width:250px; 
+}
 .imgDetails {
   margin-left:15%;
   height:650px;
