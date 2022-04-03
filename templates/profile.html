@@ -2,7 +2,7 @@
   <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>{{ page_title }}</title>
+    <title>Your progress</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="static/style/web-speech.css">
@@ -11,25 +11,25 @@
   </head>
   <body>
       <main>
-          <h3 class="text-center">{{ book_title }}</h3>
+          <h3 class="text-center">Your Reading Progress</h3>
           </br>
 
-          <div class="wrapper">
-            <div class="boxMain">
+          <div class="container">
+            <div class="first-div">
               <div style='margin-left:5%;margin-bottom:5px;'>
                 <button id="copy_button" class="btn btn-primary" 
                   onclick="location.href='{{ url_for('index')}}'">Home
                 </button>
               </div>
                 
-              <div style="font-size:1.2em;margin-left:60px;">{{username}}, you have finished reading {{ book_title }}!</div>  
+              <div style="font-size:1.2em;margin-left:60px;">{{username}}, you have finished reading {{books}} book!</div>  
               <div style="font-size:1.2em;margin-left:60px;">You have answered {{questions}} questions.</div>
-              <div style="font-size:1.2em;margin-left:60px;">You have been ranked No.{{rank}} in your group for No. of questions answered.</div>
-              <div style="font-size:1.2em;margin-left:60px;">You have been ranked No.{{rank}} in your group for No. of books read.</div>
+              <div style="font-size:1.2em;margin-left:60px;">You have been ranked No.{{book_rank}} in your group for No. of books read.</div>
+              <div style="font-size:1.2em;margin-left:60px;">You have been ranked No.{{que_rank}} in your group for No. of questions answered.</div>
             </div>
-            <div class="side">
+            <div class="first-div">
               <div style='margin-left:1% auto;'>
-                <img src="{{ url_for('static', filename='images/done.png') }}" class='iconHDetails'>
+                <img src="{{ url_for('static', filename='images/lovereading.png') }}" class='iconDetails'>
               </div>
                                   
             </div>
