@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, views, request, flash, redirect, Response, render_template, Blueprint, current_app, session, url_for
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 import csv
 import functools
 import ast
@@ -21,6 +22,20 @@ def page_config(fname):
           for row in csv.DictReader(f, skipinitialspace=True)]
   f.close()
   return page_conf
+
+def ranking(db, User, uname):
+  #questions answered by this user
+  this_user = db.session.query(User).filter_by(username = uname).first()
+  que_count = len(this_user.que_answered)
+
+  #questions answered by this user's group
+  max_question = db.session.query(func.max(User.que_answered)).filter_by(group = this_user.group).scalar()
+  
+  rank = 1
+  if que_count < len(max_question):
+    rank = 2
+  
+  return rank,que_count
 
 def question_conf(db, User, Question, page_conf, uname, bookId, path_dir):
     # filter out questions answered (correctly) by this user
@@ -68,6 +83,16 @@ def landing(db, User, Question, img_name, img_format, page_conf, bookid, session
                             ans_path = 'static/audio/' + ans_name,
                             keys=['ok','yes','ready','好了','准备'],
                             count_max=0)
+
+def ending(db, User, Question, bookid, session, book_title, book_folder):
+    uname = session["username"]
+    rank, no_question = ranking(db, User, uname)
+    return render_template( 'ending.html', 
+                            username = uname,
+                            page_title = book_folder,
+                            book_title = book_title,
+                            rank = rank,
+                            questions = no_question)
 
 def process_answer(db, User, session):
   if request.method == "POST":
