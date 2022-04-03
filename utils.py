@@ -4,6 +4,7 @@ from sqlalchemy import func
 import csv
 import functools
 import ast
+import math
 
 #login
 def login_required(method):
@@ -27,16 +28,16 @@ def page_config(fname):
 def ranking(db, User, uname):
   #questions answered by this user
   this_user = db.session.query(User).filter_by(username = uname).first()
-  que_count = len(this_user.que_answered)
+  que_cnt = len(this_user.que_answered)
 
   #questions answered by this user's group
   max_question = db.session.query(func.max(User.que_answered)).filter_by(group = this_user.group).scalar()
   
   rank = 1
-  if que_count < len(max_question):
+  if que_cnt < len(max_question):
     rank = 2
   
-  return rank,que_count
+  return rank,math.ceil(que_cnt/2)
 
 def summary(db, User, uname):
   #questions answered by this user
@@ -55,7 +56,7 @@ def summary(db, User, uname):
   if book_rank < len(max_book):
     book_rank = 2
 
-  return que_rank,que_cnt,book_rank,book_cnt
+  return que_rank,math.ceil(que_cnt/2),book_rank,math.ceil(book_cnt/2)
 
 def question_conf(db, User, Question, page_conf, uname, bookId, path_dir):
     # filter out questions answered (correctly) by this user
