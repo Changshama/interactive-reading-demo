@@ -3,7 +3,7 @@ import functools
 import wave
 from flask import Flask, jsonify, views, request, flash, redirect, Response, render_template, Blueprint, current_app, session, url_for
 from sqlalchemy import Table
-from utils import page_config, question_conf, login_required
+from utils import page_config, question_conf, login_required, page_config_temp
 from utils import landing as land
 from utils import process_answer as process
 from utils import innerbook as inner
@@ -24,6 +24,18 @@ class User(db.Model):
 class Question(db.Model):
     __table__ = Table('question', db.metadata,
                     autoload=True, autoload_with=db.engine)
+
+bp_shoofly = Blueprint('shoofly', __name__, static_folder='static',
+               template_folder='templates')
+page_conf_shoofly = page_config_temp(16, 'p', 'p')
+
+bp_doraworld = Blueprint('doraworld', __name__, static_folder='static',
+               template_folder='templates')
+page_conf_doraworld = page_config_temp(12, 'p', 'p')
+
+bp_phony = Blueprint('phony', __name__, static_folder='static',
+               template_folder='templates')
+page_conf_phony = page_config_temp(22, 'p', 'p')
 
 bp_green = Blueprint('green', __name__, static_folder='static',
                template_folder='templates')
@@ -123,7 +135,7 @@ def innerbook(page):
 @bp_nemo.route('/landing')
 @login_required
 def landing():
-    return land(db, User, db, User, Question, 'page0.png', 'imgHDetails', page_conf_nemo, 2, session, 'Finding Nemo', 'nemo', 'landing-que-eng.wav', "start-reading-eng.wav")
+    return land(db, User, Question, 'page0.png', 'imgHDetails', page_conf_nemo, 2, session, 'Finding Nemo', 'nemo', 'landing-que-eng.wav', "start-reading-eng.wav")
 
 @bp_nemo.route('/process_answer', methods=['POST', 'GET'])
 def process_answer():
@@ -177,6 +189,48 @@ def process_answer():
 def innerbook(page):
   return inner(db, User, page, page_conf_bushop, 'imgLDetails', 'The Magic School Bus Hops Home', 'bushop', session)
 
+@bp_shoofly.route('/landing')
+@login_required
+def landing(): 
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_shoofly, 9, session, 'Shoo, Fly Guy!', 'shoofly', 'landing-que-eng.wav', "start-reading-eng.wav")
+
+@bp_shoofly.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  return process(db, User, session)
+
+@bp_shoofly.route('/<int:page>')
+@login_required
+def innerbook(page):
+  return inner(db, User, page, page_conf_shoofly, 'imgSDetails', 'Shoo, Fly Guy!', 'shoofly', session)
+
+@bp_phony.route('/landing')
+@login_required
+def landing(): 
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_phony, 10, session, 'Nate The Great and the Phony Clue', 'phony', 'landing-que-eng.wav', "start-reading-eng.wav")
+
+@bp_phony.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  return process(db, User, session)
+
+@bp_phony.route('/<int:page>')
+@login_required
+def innerbook(page):
+  return inner(db, User, page, page_conf_phony, 'imgSDetails', 'Nate The Great and the Phony Clue', 'phony', session)
+
+@bp_doraworld.route('/landing')
+@login_required
+def landing(): 
+  return land(db, User, Question, 'p0.png', 'imgDetails', page_conf_doraworld, 11, session, 'Dora\'s World Adventure', 'doraworld', 'landing-que-eng.wav', "start-reading-eng.wav")
+
+@bp_doraworld.route('/process_answer', methods=['POST', 'GET'])
+def process_answer():
+  return process(db, User, session)
+
+@bp_doraworld.route('/<int:page>')
+@login_required
+def innerbook(page):
+  return inner(db, User, page, page_conf_doraworld, 'imgLDetails', 'Dora\'s World Adventure', 'doraworld', session)
+
 
 class Main(views.MethodView):
     def get(self):
@@ -219,7 +273,9 @@ app.register_blueprint(bp_sally, url_prefix='/sally')
 app.register_blueprint(bp_bushop, url_prefix='/bushop')
 app.register_blueprint(bp_nemo, url_prefix='/nemo')
 app.register_blueprint(bp_pigeon, url_prefix='/pigeon')
-
+app.register_blueprint(bp_shoofly, url_prefix='/shoofly')
+app.register_blueprint(bp_phony, url_prefix='/phony')
+app.register_blueprint(bp_doraworld, url_prefix='/doraworld')
 app.register_blueprint(bp_ic, url_prefix='/ic')
 # with app.app_context():
 #     db.create_all()

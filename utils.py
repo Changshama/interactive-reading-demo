@@ -24,6 +24,24 @@ def page_config(fname):
   f.close()
   return page_conf
 
+def page_config_temp(pages, img_prefix, audio_prefix):
+  page_conf = []
+  page = {}
+  i = 0
+  for i in range(1, pages+1):
+    page['id'] = 'page'+str(i)
+    page['img_name'] = img_prefix +str(i)+'.png'
+    page['audio_name'] = audio_prefix +str(i)+'.wav'
+    page['next_page'] = i+1 if i < pages else 1
+    page['que_id'] = ''
+    page['que_audio'] = ''
+    page['ans_audio'] = ''
+    page['count_max'] = 0
+    page['ans_keys'] = []
+    page_conf.append(page)
+  print(page_conf)
+  return page_conf
+
 #need to rework on ranking function
 def ranking(db, User, uname):
   #questions answered by this user
