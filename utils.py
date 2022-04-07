@@ -26,9 +26,9 @@ def page_config(fname):
 
 def page_config_temp(pages, img_prefix, audio_prefix):
   page_conf = []
-  page = {}
-  i = 0
+  
   for i in range(1, pages+1):
+    page = {}
     page['id'] = 'page'+str(i)
     page['img_name'] = img_prefix +str(i)+'.png'
     page['audio_name'] = audio_prefix +str(i)+'.wav'
@@ -39,7 +39,6 @@ def page_config_temp(pages, img_prefix, audio_prefix):
     page['count_max'] = 0
     page['ans_keys'] = []
     page_conf.append(page)
-  print(page_conf)
   return page_conf
 
 #need to rework on ranking function
